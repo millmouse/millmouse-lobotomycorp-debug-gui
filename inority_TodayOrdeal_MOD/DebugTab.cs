@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SageMod
+namespace MyMod
 {
     public class DebugTab
     {

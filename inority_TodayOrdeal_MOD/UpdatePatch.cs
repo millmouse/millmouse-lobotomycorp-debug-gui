@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Reflection;
 using Harmony;
-using SageMod;
 using UnityEngine;
 
-namespace TodayOrdeal
+namespace MyMod
 {
     public class UpdatePatch : MonoBehaviour
     {

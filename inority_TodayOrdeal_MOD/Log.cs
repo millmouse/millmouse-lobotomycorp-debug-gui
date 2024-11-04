@@ -2,7 +2,7 @@
 using System.IO;
 using UnityEngine;
 
-namespace TodayOrdeal
+namespace MyMod
 {
     internal class Log
     {

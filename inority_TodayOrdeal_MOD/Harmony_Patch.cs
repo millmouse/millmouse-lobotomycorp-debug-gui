@@ -3,7 +3,7 @@ using UnityEngine;
 using Harmony;
 using System.Collections.Generic;
 
-namespace TodayOrdeal
+namespace MyMod
 {
     public class Harmony_Patch : MonoBehaviour
     {

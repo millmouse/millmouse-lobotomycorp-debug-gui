@@ -1,10 +1,8 @@
 ﻿using SageMod;
 using UnityEngine;
 using System;
-using SageMod;
-using UnityEngine;
 
-namespace TodayOrdeal
+namespace MyMod
 {
     public class HelloWorldGUI : MonoBehaviour
     {
