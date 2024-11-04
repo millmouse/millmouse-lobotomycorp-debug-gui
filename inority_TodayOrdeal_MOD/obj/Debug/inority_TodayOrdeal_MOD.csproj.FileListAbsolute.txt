@@ -103,8 +103,6 @@ D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy\copy1\i
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy\copy1\inority_TodayOrdeal_MOD\obj\Debug\inority_TodayOrdeal_MOD_edit.pdb
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy\copy1\inority_TodayOrdeal_MOD\obj\Debug\inority_TodayOrdeal_MOD.csproj.AssemblyReference.cache
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy\copy1\inority_TodayOrdeal_MOD\obj\Debug\inority_.491A5B70.Up2Date
-D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\obj\Debug\inority_TodayOrdeal_MOD.csproj.AssemblyReference.cache
-D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\obj\Debug\inority_TodayOrdeal_MOD.csproj.CoreCompileInputs.cache
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\sage_MOD.dll
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\sage_MOD.pdb
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\0Harmony.dll
@@ -115,10 +113,10 @@ D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\UnityEngine.ImageConversionModule.dll
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\UnityEngine.IMGUIModule.dll
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\UnityEngine.UI.dll
+D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\UnityEngine.UIModule.dll
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\UnityEngine.PhysicsModule.dll
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\UnityEngine.TextRenderingModule.dll
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\UnityEngine.ParticleSystemModule.dll
-D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\UnityEngine.UIModule.dll
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\UnityEngine.AudioModule.dll
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\UnityEngine.Physics2DModule.dll
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\UnityEngine.VideoModule.dll
@@ -163,10 +161,10 @@ D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\UnityEngine.CoreModule.xml
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\UnityEngine.ImageConversionModule.xml
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\UnityEngine.IMGUIModule.xml
+D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\UnityEngine.UIModule.xml
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\UnityEngine.PhysicsModule.xml
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\UnityEngine.TextRenderingModule.xml
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\UnityEngine.ParticleSystemModule.xml
-D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\UnityEngine.UIModule.xml
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\UnityEngine.AudioModule.xml
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\UnityEngine.Physics2DModule.xml
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\UnityEngine.VideoModule.xml
@@ -205,6 +203,7 @@ D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\UnityEngine.UnityWebRequestTextureModule.xml
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\UnityEngine.UnityWebRequestWWWModule.xml
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\bin\Debug\UnityEngine.WindModule.xml
-D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\obj\Debug\inority_.491A5B70.Up2Date
+D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\obj\Debug\inority_TodayOrdeal_MOD.csproj.CoreCompileInputs.cache
+D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\obj\Debug\inority_TodayOrdeal_MOD.csproj.CopyComplete
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\obj\Debug\sage_MOD.dll
 D:\Files_2\Laboratory\Modding\LoboCorp_Workstation\mods\todaysordealcopy - Copy\copy1\inority_TodayOrdeal_MOD\obj\Debug\sage_MOD.pdb

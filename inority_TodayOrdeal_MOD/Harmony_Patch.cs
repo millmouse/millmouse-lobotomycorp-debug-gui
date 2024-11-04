@@ -1,33 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using Harmony;
 using UnityEngine;
+using Harmony;
+using System.Collections.Generic;
 
 namespace TodayOrdeal
 {
-    public class Harmony_Patch
+    public class Harmony_Patch : MonoBehaviour
     {
+        public static HelloWorldGUI guiInstance;
+
         public Harmony_Patch()
         {
             Harmony_Patch.Invoke(delegate
             {
                 HarmonyInstance mod = HarmonyInstance.Create("Lobotomy.sage.mod");
-                this.Patch(mod);
+                new StartGamePatch(mod);
+                GameObject updatePatchObject = new GameObject("UpdatePatchObject");
+                UpdatePatch updatePatch = updatePatchObject.AddComponent<UpdatePatch>();
+                updatePatch.Init(mod);
+                GameObject guiObject = new GameObject("HelloWorldGUI");
+                guiInstance = guiObject.AddComponent<HelloWorldGUI>();
             });
-        }
-
-        public void Patch(HarmonyInstance mod)
-        {
-            MethodInfo original = typeof(GameManager).GetMethod("StartGame");
-            MethodInfo postfix = typeof(Harmony_Patch).GetMethod("Postfix_StartGame");
-
-            mod.Patch(original, null, new HarmonyMethod(postfix), null);
-
-            Log.Error("patch success!");
-
-            GameObject guiObject = new GameObject("HelloWorldGUI");
-            guiObject.AddComponent<HelloWorldGUI>();
         }
 
         private static void Invoke(Action action)
