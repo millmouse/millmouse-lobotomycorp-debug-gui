@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace SageMod.Util
+namespace MyMod
 {
 
     public static class ColorUtils

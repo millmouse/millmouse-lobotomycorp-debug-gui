@@ -1,5 +1,4 @@
-﻿using SageMod.Util;
-using System;
+﻿using System;
 using System.IO;
 using UnityEngine;
 
@@ -40,8 +39,7 @@ namespace MyMod
 
             Log.Error(message);
 
-            DebugTab.AddMessage(message, ColorUtils.HexToColor("#7d9ed1"));
-            DebugTab.AddMessage("AAA", ColorUtils.HexToColor("#7d9ed1"));
+            DebugTab.AddMessage(message, ColorUtils.HexToColor("#edf4ff"));
         }
 
         public static void LogAndDebug(string message, Color color)

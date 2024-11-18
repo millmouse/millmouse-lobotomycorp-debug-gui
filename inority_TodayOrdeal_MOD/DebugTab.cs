@@ -10,7 +10,7 @@ namespace MyMod
         private Queue<DebugMessage> messageQueue;
         private bool autoScroll = true;
         private static DebugTab instance;
-        private float throttleInterval = 0.5f;
+        private float throttleInterval = 0.2f;
         private float lastMessageTime;
         private Vector2 scrollPosition;
 

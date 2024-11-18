@@ -88,4 +88,8 @@
     <EmbeddedResource Include="Properties\Resources.resources" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(TargetDir)sage_MOD.dll" "D:\SteamLibrary\steamapps\common\LobotomyCorp\LobotomyCorp_Data\BaseMods\my_mod\" /Y /I
+</PostBuildEvent>
+  </PropertyGroup>
 </Project>

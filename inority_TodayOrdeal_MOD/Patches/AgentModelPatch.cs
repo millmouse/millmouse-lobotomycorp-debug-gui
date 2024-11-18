@@ -46,7 +46,7 @@ public class AgentModelPatch
         string agentName = __instance?.name ?? "Unknown Agent Name";
         if (Harmony_Patch.guiInstance != null && Harmony_Patch.guiInstance.debugTab != null)
         {
-            Log.LogAndDebug($"Logged from class: {targetClassName}, method: {targetMethodName}, Agent Name: {agentName}", Color.blue);
+            Log.LogAndDebug($"Logged from class: {targetClassName}, method: {targetMethodName}, Agent Name: {agentName}", ColorUtils.HexToColor("#f7e160"));
         }
     }
 }
