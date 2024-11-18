@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Reflection;
 
-namespace SageMod.Patches
+namespace MyMod
 {
     public class AnyPatch
     {
