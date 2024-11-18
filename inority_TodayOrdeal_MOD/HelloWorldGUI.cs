@@ -9,7 +9,7 @@ namespace MyMod
         private Rect windowRect;
         public DebugTab debugTab;
         private bool showWindow = true;
-        private int selectedTabIndex = 1;  // Set default to "Debug" tab
+        private int selectedTabIndex = 1;
 
         private void Start()
         {
@@ -17,7 +17,6 @@ namespace MyMod
             DontDestroyOnLoad(this.gameObject);
             debugTab = new DebugTab();
 
-            // Ensure "Debug" tab is selected by default
             selectedTabIndex = 1;
         }
 
@@ -35,13 +34,6 @@ namespace MyMod
         {
             GUILayout.BeginHorizontal();
 
-            // Commented out the "Data Table" button, so no need to worry about it anymore
-            // if (GUILayout.Button("Data Table"))
-            // {
-            //     selectedTabIndex = 0;
-            // }
-
-            // Button for "Debug" tab
             if (GUILayout.Button("Debug"))
             {
                 selectedTabIndex = 1;
@@ -49,7 +41,6 @@ namespace MyMod
 
             GUILayout.EndHorizontal();
 
-            // Display the "Debug" tab if selected
             switch (selectedTabIndex)
             {
                 case 1:

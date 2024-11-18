@@ -8,12 +8,12 @@
 //{
 //    public class GameManagerPatch : MonoBehaviour
 //    {
-//        // This interval defines how often we log the GameManager address (in seconds).
+
 //        private readonly float logInterval = 2.0f;
 
 //        public void Init(HarmonyInstance mod)
 //        {
-//            // Start the coroutine to log the GameManager address
+
 //            StartCoroutine(LogGameManagerAddressCoroutine());
 //        }
 
@@ -27,7 +27,7 @@
 //                }
 //                catch (Exception ex)
 //                {
-//                    Log.Error(ex); // Use Log.Error to log the exception
+//                    Log.Error(ex);
 //                }
 //                yield return new WaitForSeconds(logInterval);
 //            }
@@ -43,7 +43,7 @@
 //                }
 //                catch (Exception ex)
 //                {
-//                    Log.Error(ex); // Use Log.Error to log the exception
+//                    Log.Error(ex);
 //                    return null;
 //                }
 //            }
@@ -57,14 +57,11 @@
 //                try
 //                {
 //                    LogDebugTabMessage("GameManager instance is NOT null.");
-//                    // Uncomment these lines if you want to log the address
-//                    // IntPtr address = GCHandle.Alloc(gameManagerInstance).AddrOfPinnedObject();
-//                    // string addressHex = address.ToString("X");
-//                    // LogDebugTabMessage($"GameManager Address: 0x{addressHex}");
+
 //                }
 //                catch (Exception ex)
 //                {
-//                    Log.Error(ex); // Use Log.Error to log the exception
+//                    Log.Error(ex);
 //                }
 //            }
 //            else

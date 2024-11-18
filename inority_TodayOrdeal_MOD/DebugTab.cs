@@ -7,7 +7,7 @@ namespace MyMod
     public class DebugTab
     {
         private List<DebugMessage> debugMessages;
-        private Queue<DebugMessage> messageQueue; // Change queue to hold DebugMessage objects
+        private Queue<DebugMessage> messageQueue;
         private bool autoScroll = true;
         private static DebugTab instance;
         private float throttleInterval = 0.5f;
@@ -37,7 +37,6 @@ namespace MyMod
         {
             string timestampedMessage = $"{DateTime.Now:HH:mm:ss} - {message}";
 
-            // Only add the message if it's not already in the queue or debugMessages
             if (!messageQueue.Contains(new DebugMessage(timestampedMessage, color)) &&
                 !debugMessages.Exists(dm => dm.Message == timestampedMessage && dm.Color == color))
             {
@@ -76,13 +75,11 @@ namespace MyMod
         {
             float currentTime = Time.time;
 
-            // Process a new message only if the throttle interval has passed
             if (currentTime - lastMessageTime >= throttleInterval && messageQueue.Count > 0)
             {
                 lastMessageTime = currentTime;
                 DebugMessage nextMessage = messageQueue.Dequeue();
 
-                // Add the message with color to debugMessages after the throttle interval
                 debugMessages.Add(nextMessage);
             }
         }
@@ -99,7 +96,6 @@ namespace MyMod
             Color = color;
         }
 
-        // Override Equals and GetHashCode to handle message comparisons correctly in collections
         public override bool Equals(object obj)
         {
             if (obj is DebugMessage other)

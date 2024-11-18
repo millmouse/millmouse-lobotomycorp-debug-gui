@@ -25,9 +25,9 @@ namespace MyMod
                     File.Delete(logFilePath);
                 }
 
-                string timestampedMessage = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {message}"; // Prefix with timestamp
+                string timestampedMessage = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {message}";
                 File.AppendAllText(logFilePath, timestampedMessage + "\n");
-                logFileCreated = true; // Set the flag to true after the first write
+                logFileCreated = true;
             }
             catch (Exception ex)
             {
@@ -37,20 +37,18 @@ namespace MyMod
 
         public static void LogAndDebug(string message)
         {
-            // Log to the console
+
             Log.Error(message);
 
-            // Add the message to the DebugTab
             DebugTab.AddMessage(message, ColorUtils.HexToColor("#7d9ed1"));
             DebugTab.AddMessage("AAA", ColorUtils.HexToColor("#7d9ed1"));
         }
 
-        public static void LogAndDebug(string message,Color color)
+        public static void LogAndDebug(string message, Color color)
         {
-            // Log to the console
+
             Log.Error(message);
 
-            // Add the message to the DebugTab
             DebugTab.AddMessage(message, color);
         }
     }

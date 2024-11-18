@@ -11,16 +11,16 @@ namespace SageMod.Util
     {
         public static Color HexToColor(string hex)
         {
-            hex = hex.Replace("#", ""); // Remove '#' if present
+            hex = hex.Replace("#", "");
 
-            if (hex.Length == 6) // RGB
+            if (hex.Length == 6)
             {
                 byte r = byte.Parse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
                 byte g = byte.Parse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber);
                 byte b = byte.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
                 return new Color(r / 255f, g / 255f, b / 255f);
             }
-            else if (hex.Length == 8) // RGBA
+            else if (hex.Length == 8)
             {
                 byte r = byte.Parse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
                 byte g = byte.Parse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber);
@@ -31,7 +31,7 @@ namespace SageMod.Util
             else
             {
                 Debug.LogError("Invalid hex code length!");
-                return Color.white; // Default to white if the hex code is invalid
+                return Color.white;
             }
         }
     }
