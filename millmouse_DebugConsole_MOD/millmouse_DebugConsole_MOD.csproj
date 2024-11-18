@@ -6,8 +6,8 @@
     <ProjectGuid>{E56E0221-C5D4-473B-BC5D-DBB22FF6C441}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SageMod</RootNamespace>
-    <AssemblyName>sage_MOD</AssemblyName>
+    <RootNamespace>MyMod</RootNamespace>
+    <AssemblyName>millmouse_DebugConsole_MOD</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>..\..\..\..\..\..\File Extraction\LobotomyCorp\Code\todaysordealcopy\inority_TodayOrdeal_MOD\bin\Debug\0Harmony.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\File Extraction\LobotomyCorp\Code\todaysordealcopy\millmouse_DebugConsole_MOD\bin\Debug\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

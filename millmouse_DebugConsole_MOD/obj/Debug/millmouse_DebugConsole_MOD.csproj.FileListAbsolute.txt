@@ -1,0 +1,7 @@
+E:\Start_Here\User_Files\Code\MODDING\Lobotomy_Corporation\guimodlobcorp\copy1\millmouse_DebugConsole_MOD\bin\Debug\millmouse_DebugConsole_MOD.dll
+E:\Start_Here\User_Files\Code\MODDING\Lobotomy_Corporation\guimodlobcorp\copy1\millmouse_DebugConsole_MOD\bin\Debug\millmouse_DebugConsole_MOD.pdb
+E:\Start_Here\User_Files\Code\MODDING\Lobotomy_Corporation\guimodlobcorp\copy1\millmouse_DebugConsole_MOD\obj\Debug\millmouse_DebugConsole_MOD.csproj.AssemblyReference.cache
+E:\Start_Here\User_Files\Code\MODDING\Lobotomy_Corporation\guimodlobcorp\copy1\millmouse_DebugConsole_MOD\obj\Debug\millmouse_DebugConsole_MOD.csproj.CoreCompileInputs.cache
+E:\Start_Here\User_Files\Code\MODDING\Lobotomy_Corporation\guimodlobcorp\copy1\millmouse_DebugConsole_MOD\obj\Debug\millmous.1E2A20D9.Up2Date
+E:\Start_Here\User_Files\Code\MODDING\Lobotomy_Corporation\guimodlobcorp\copy1\millmouse_DebugConsole_MOD\obj\Debug\millmouse_DebugConsole_MOD.dll
+E:\Start_Here\User_Files\Code\MODDING\Lobotomy_Corporation\guimodlobcorp\copy1\millmouse_DebugConsole_MOD\obj\Debug\millmouse_DebugConsole_MOD.pdb
