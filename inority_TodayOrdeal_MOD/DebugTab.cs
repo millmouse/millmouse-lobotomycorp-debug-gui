@@ -6,31 +6,43 @@ namespace MyMod
 {
     public class DebugTab
     {
-        private List<string> debugMessages;
-        private Queue<string> messageQueue;
+        private List<DebugMessage> debugMessages;
+        private Queue<DebugMessage> messageQueue; // Change queue to hold DebugMessage objects
         private bool autoScroll = true;
         private static DebugTab instance;
-        private float throttleInterval = 2.0f;
+        private float throttleInterval = 0.5f;
         private float lastMessageTime;
-        private Vector2 scrollPosition; 
+        private Vector2 scrollPosition;
 
         public string Name => "Debug";
 
         public DebugTab()
         {
-            debugMessages = new List<string>();
-            messageQueue = new Queue<string>();
+            debugMessages = new List<DebugMessage>();
+            messageQueue = new Queue<DebugMessage>();
             instance = this;
         }
 
         public static void AddMessage(string message)
         {
-            instance?.AddDebugMessage(message);
+            instance?.AddDebugMessage(message, Color.white);
         }
 
-        private void AddDebugMessage(string message)
+        public static void AddMessage(string message, Color color)
         {
-            messageQueue.Enqueue(message);
+            instance?.AddDebugMessage(message, color);
+        }
+
+        private void AddDebugMessage(string message, Color color)
+        {
+            string timestampedMessage = $"{DateTime.Now:HH:mm:ss} - {message}";
+
+            // Only add the message if it's not already in the queue or debugMessages
+            if (!messageQueue.Contains(new DebugMessage(timestampedMessage, color)) &&
+                !debugMessages.Exists(dm => dm.Message == timestampedMessage && dm.Color == color))
+            {
+                messageQueue.Enqueue(new DebugMessage(timestampedMessage, color));
+            }
         }
 
         public void Render()
@@ -39,14 +51,17 @@ namespace MyMod
 
             Rect boxRect = new Rect(0, 0, 600, 300);
 
-            GUI.Box(boxRect, "", GUIStyle.none); 
-            GUI.backgroundColor = Color.black; 
+            GUI.Box(boxRect, "", GUIStyle.none);
+            GUI.backgroundColor = Color.black;
 
             scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(600), GUILayout.Height(300));
-            foreach (var message in debugMessages)
+
+            foreach (var debugMessage in debugMessages)
             {
-                GUILayout.Label(message);
+                GUI.contentColor = debugMessage.Color;
+                GUILayout.Label(debugMessage.Message);
             }
+
             GUILayout.EndScrollView();
 
             autoScroll = GUILayout.Toggle(autoScroll, "Auto-scroll");
@@ -57,17 +72,46 @@ namespace MyMod
             }
         }
 
-
         private void ThrottleMessages()
         {
             float currentTime = Time.time;
+
+            // Process a new message only if the throttle interval has passed
             if (currentTime - lastMessageTime >= throttleInterval && messageQueue.Count > 0)
             {
                 lastMessageTime = currentTime;
-                string nextMessage = messageQueue.Dequeue();
-                string timestampedMessage = $"{DateTime.Now:HH:mm:ss} - {nextMessage}";
-                debugMessages.Add(timestampedMessage);
+                DebugMessage nextMessage = messageQueue.Dequeue();
+
+                // Add the message with color to debugMessages after the throttle interval
+                debugMessages.Add(nextMessage);
             }
+        }
+    }
+
+    public class DebugMessage
+    {
+        public string Message { get; }
+        public Color Color { get; }
+
+        public DebugMessage(string message, Color color)
+        {
+            Message = message;
+            Color = color;
+        }
+
+        // Override Equals and GetHashCode to handle message comparisons correctly in collections
+        public override bool Equals(object obj)
+        {
+            if (obj is DebugMessage other)
+            {
+                return Message == other.Message && Color == other.Color;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Message.GetHashCode() ^ Color.GetHashCode();
         }
     }
 }
