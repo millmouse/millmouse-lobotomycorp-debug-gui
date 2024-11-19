@@ -10,7 +10,7 @@ namespace MyMod.Patches
     public interface IPatch
     {
         void Patch(HarmonyInstance mod, string targetMethodName, string patchMethodName);
-        void Postfix_LogPatch(object instance);
+        void Postfix_LoggerPatch(object instance);
     }
 
     public static class PatchConstants
