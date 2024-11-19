@@ -81,6 +81,7 @@
     <Compile Include="Patches\AgentModelPatch.cs" />
     <Compile Include="Patches\AnyPatch.cs" />
     <Compile Include="Patches\CreatureManagerPatch.cs" />
+    <Compile Include="Patches\Interface\IPatch.cs" />
     <Compile Include="Patches\PatchCaller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.cs" />

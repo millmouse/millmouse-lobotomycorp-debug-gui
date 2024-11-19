@@ -19,7 +19,6 @@ namespace MyMod
             debugMessages = new List<DebugMessage>();
             instance = this;
 
-            // Configure MessageDispatcher with a throttle interval and action for handling messages.
             messageDispatcher = new MessageDispatcher<DebugMessage>(0.2f, AddToDebugMessages);
         }
 
@@ -38,7 +37,6 @@ namespace MyMod
             string timestampedMessage = $"{DateTime.Now:HH:mm:ss} - {message}";
             var newMessage = new DebugMessage(timestampedMessage, color);
 
-            // Enqueue the message using the MessageDispatcher.
             messageDispatcher.Enqueue(newMessage);
         }
 

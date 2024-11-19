@@ -12,7 +12,7 @@ namespace MyMod.Patches
         {
 
             Type patchType = typeof(AnyPatch);
-            string patchMethodName = "Postfix_LoggerPatch";
+            string patchMethodName = PatchConstants.PatchMethodName;
 
             Patch(mod, targetType, targetMethodName, patchType, patchMethodName);
         }
@@ -36,7 +36,7 @@ namespace MyMod.Patches
             }
         }
 
-        public static void Postfix_LoggerPatch()
+        public static void Postfix_LogPatch()
         {
 
             var originalMethod = new StackTrace().GetFrame(1).GetMethod();
