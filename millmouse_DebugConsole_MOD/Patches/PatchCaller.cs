@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using WorkerSpine;
+using static AgentHistory;
 
-namespace MyMod
+namespace MyMod.Patches
 {
     public class PatchCaller
     {
@@ -20,9 +21,27 @@ namespace MyMod
             PatchGlobalBulletManager(mod);
             PatchExplodeGutManager(mod);
             PatchCreatureManager(mod);
-            PatchAgentInfoWindow(mod);
+            //PatchAgentInfoWindow(mod);
             PatchAgentSpriteChanger(mod);
             PatchAgentModel(mod);
+            PatchAgentHistory(mod);
+        }
+
+        private void PatchAgentHistory(HarmonyInstance mod)
+        {
+            new AnyPatch(mod, typeof(AgentHistory), "Disposition");
+            new AnyPatch(mod, typeof(AgentHistory), "AddPanic");
+            new AnyPatch(mod, typeof(AgentHistory), "AddWorkCubeCount");
+            new AnyPatch(mod, typeof(AgentHistory), "AddWorkDay");
+            new AnyPatch(mod, typeof(AgentHistory), "CreatureAttack");
+            new AnyPatch(mod, typeof(AgentHistory), "LoadData");
+            new AnyPatch(mod, typeof(AgentHistory), "GetSaveData");
+            new AnyPatch(mod, typeof(AgentHistory), "Suppress");
+            new AnyPatch(mod, typeof(AgentHistory), "AddWorkSuccess");
+            new AnyPatch(mod, typeof(AgentHistory), "PhysicalDamage");
+            new AnyPatch(mod, typeof(AgentHistory), "MentalDamage");
+
+            new AnyPatch(mod, typeof(PromotionNeedVal), "GetNeedVal");
         }
 
         private void PatchBgmAndOrdeal(HarmonyInstance mod)
@@ -43,14 +62,14 @@ namespace MyMod
             new AnyPatch(mod, typeof(CursorManager), "Start");
             new AnyPatch(mod, typeof(CursorManager), "HideCursor");
             new AnyPatch(mod, typeof(CursorManager), "ForcelyCurserSet");
-            new AnyPatch(mod, typeof(CursorManager), "OnEnteredTarget");
-            new AnyPatch(mod, typeof(CursorManager), "OnExitTarget");
+            //new AnyPatch(mod, typeof(CursorManager), "OnEnteredTarget");
+            //new AnyPatch(mod, typeof(CursorManager), "OnExitTarget");
         }
 
         private void PatchAgentManager(HarmonyInstance mod)
         {
             new AnyPatch(mod, typeof(AgentManager), "OnStageStart");
-            new AnyPatch(mod, typeof(AgentManager), "GetAgentList");
+            //new AnyPatch(mod, typeof(AgentManager), "GetAgentList"); // Called too much.
         }
 
         private void PatchResultScreen(HarmonyInstance mod)
@@ -99,7 +118,7 @@ namespace MyMod
         private void PatchCreatureManager(HarmonyInstance mod)
         {
             new AnyPatch(mod, typeof(CreatureManager), "Init");
-            new AnyPatch(mod, typeof(CreatureManager), "RegisterCreature");
+            new CreatureManagerPatch(mod);
             new AnyPatch(mod, typeof(CreatureManager), "OnGameInit");
             new AnyPatch(mod, typeof(CreatureManager), "AddCreature");
             new AnyPatch(mod, typeof(CreatureManager), "FindCreature");

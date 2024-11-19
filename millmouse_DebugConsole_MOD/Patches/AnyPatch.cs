@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Reflection;
 
-namespace MyMod
+namespace MyMod.Patches
 {
     public class AnyPatch
     {

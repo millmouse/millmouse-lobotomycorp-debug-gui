@@ -6,7 +6,7 @@ using System.Text;
 using Harmony;
 using UnityEngine;
 
-namespace MyMod
+namespace MyMod.Patches
 {
     public class StartGamePatch
     {

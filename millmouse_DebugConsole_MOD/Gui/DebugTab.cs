@@ -7,20 +7,20 @@ namespace MyMod
     public class DebugTab
     {
         private List<DebugMessage> debugMessages;
-        private Queue<DebugMessage> messageQueue;
         private bool autoScroll = true;
         private static DebugTab instance;
-        private float throttleInterval = 0.2f;
-        private float lastMessageTime;
         private Vector2 scrollPosition;
+        private MessageDispatcher<DebugMessage> messageDispatcher;
 
         public string Name => "Debug";
 
         public DebugTab()
         {
             debugMessages = new List<DebugMessage>();
-            messageQueue = new Queue<DebugMessage>();
             instance = this;
+
+            // Configure MessageDispatcher with a throttle interval and action for handling messages.
+            messageDispatcher = new MessageDispatcher<DebugMessage>(0.2f, AddToDebugMessages);
         }
 
         public static void AddMessage(string message)
@@ -36,20 +36,17 @@ namespace MyMod
         private void AddDebugMessage(string message, Color color)
         {
             string timestampedMessage = $"{DateTime.Now:HH:mm:ss} - {message}";
+            var newMessage = new DebugMessage(timestampedMessage, color);
 
-            if (!messageQueue.Contains(new DebugMessage(timestampedMessage, color)) &&
-                !debugMessages.Exists(dm => dm.Message == timestampedMessage && dm.Color == color))
-            {
-                messageQueue.Enqueue(new DebugMessage(timestampedMessage, color));
-            }
+            // Enqueue the message using the MessageDispatcher.
+            messageDispatcher.Enqueue(newMessage);
         }
 
         public void Render()
         {
-            ThrottleMessages();
+            messageDispatcher.ProcessQueue();
 
             Rect boxRect = new Rect(0, 0, 600, 300);
-
             GUI.Box(boxRect, "", GUIStyle.none);
             GUI.backgroundColor = Color.black;
 
@@ -71,43 +68,13 @@ namespace MyMod
             }
         }
 
-        private void ThrottleMessages()
+        private void AddToDebugMessages(DebugMessage message)
         {
-            float currentTime = Time.time;
-
-            if (currentTime - lastMessageTime >= throttleInterval && messageQueue.Count > 0)
+            // Avoid duplicates if necessary.
+            if (!debugMessages.Exists(dm => dm.Message == message.Message && dm.Color == message.Color))
             {
-                lastMessageTime = currentTime;
-                DebugMessage nextMessage = messageQueue.Dequeue();
-
-                debugMessages.Add(nextMessage);
+                debugMessages.Add(message);
             }
-        }
-    }
-
-    public class DebugMessage
-    {
-        public string Message { get; }
-        public Color Color { get; }
-
-        public DebugMessage(string message, Color color)
-        {
-            Message = message;
-            Color = color;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj is DebugMessage other)
-            {
-                return Message == other.Message && Color == other.Color;
-            }
-            return false;
-        }
-
-        public override int GetHashCode()
-        {
-            return Message.GetHashCode() ^ Color.GetHashCode();
         }
     }
 }
