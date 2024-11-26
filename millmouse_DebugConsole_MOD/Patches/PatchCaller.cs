@@ -13,13 +13,8 @@ namespace MyMod.Patches
     {
         public void CallPatches(HarmonyInstance mod)
         {
-            PatchBgmAndOrdeal(mod);
-            PatchCursorManager(mod);
             PatchAgentManager(mod);
             PatchResultScreen(mod);
-            PatchGlobalGameManager(mod);
-            PatchGlobalBulletManager(mod);
-            PatchExplodeGutManager(mod);
             PatchCreatureManager(mod);
             //PatchAgentInfoWindow(mod);
             PatchAgentSpriteChanger(mod);
@@ -44,32 +39,9 @@ namespace MyMod.Patches
             new AnyPatch(mod, typeof(PromotionNeedVal), "GetNeedVal");
         }
 
-        private void PatchBgmAndOrdeal(HarmonyInstance mod)
-        {
-            new AnyPatch(mod, typeof(BgmManager), "PlayBgm");
-            new AnyPatch(mod, typeof(OrdealManager), "OnGameInit");
-            new AnyPatch(mod, typeof(GlobalAudioManager), "OnSceneLoad");
-            new AnyPatch(mod, typeof(OrdealManager), "OnStageStart");
-            new AnyPatch(mod, typeof(RandomEventManager), "OnStageStart");
-            new AnyPatch(mod, typeof(AnimatorManager), "Init");
-            new AnyPatch(mod, typeof(MissionManager), "Init");
-            new AnyPatch(mod, typeof(OfficerManager), "Init");
-            new AnyPatch(mod, typeof(HierarchicalDataManager), "Init");
-        }
-
-        private void PatchCursorManager(HarmonyInstance mod)
-        {
-            new AnyPatch(mod, typeof(CursorManager), "Start");
-            new AnyPatch(mod, typeof(CursorManager), "HideCursor");
-            new AnyPatch(mod, typeof(CursorManager), "ForcelyCurserSet");
-            //new AnyPatch(mod, typeof(CursorManager), "OnEnteredTarget");
-            //new AnyPatch(mod, typeof(CursorManager), "OnExitTarget");
-        }
-
         private void PatchAgentManager(HarmonyInstance mod)
         {
             new AnyPatch(mod, typeof(AgentManager), "OnStageStart");
-            //new AnyPatch(mod, typeof(AgentManager), "GetAgentList"); // Called too much.
         }
 
         private void PatchResultScreen(HarmonyInstance mod)
@@ -98,21 +70,6 @@ namespace MyMod.Patches
             new AnyPatch(mod, typeof(GlobalGameManager), "LoadData");
             new AnyPatch(mod, typeof(GlobalGameManager), "SaveData");
             new AnyPatch(mod, typeof(GlobalGameManager), "SaveDataWithCheckPoint");
-        }
-
-        private void PatchGlobalBulletManager(HarmonyInstance mod)
-        {
-            new AnyPatch(mod, typeof(GlobalBulletManager), "UpdateUI");
-            new AnyPatch(mod, typeof(GlobalBulletManager), "ActivateBullet");
-            new AnyPatch(mod, typeof(GlobalBulletManager), "ExcuteBullet");
-            new AnyPatch(mod, typeof(GlobalBulletManager), "OnStageStart");
-            new AnyPatch(mod, typeof(GlobalBulletManager), "SetMaxBullet");
-        }
-
-        private void PatchExplodeGutManager(HarmonyInstance mod)
-        {
-            new AnyPatch(mod, typeof(ExplodeGutManager), "MakeEffects");
-            new AnyPatch(mod, typeof(ExplodeGutManager), "Start");
         }
 
         private void PatchCreatureManager(HarmonyInstance mod)
