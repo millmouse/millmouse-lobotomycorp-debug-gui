@@ -15,11 +15,10 @@ namespace MyMod.Patches
         {
             PatchAgentManager(mod);
             PatchResultScreen(mod);
-            PatchCreatureManager(mod);
             //PatchAgentInfoWindow(mod);
-            PatchAgentSpriteChanger(mod);
             PatchAgentModel(mod);
             PatchAgentHistory(mod);
+            //make a patch specifically for detecting hp up and down of agent. 
         }
 
         private void PatchAgentHistory(HarmonyInstance mod)
@@ -54,63 +53,20 @@ namespace MyMod.Patches
             new AnyPatch(mod, typeof(ResultScreen), "AgentReset");
         }
 
-        private void PatchGlobalGameManager(HarmonyInstance mod)
-        {
-            new AnyPatch(mod, typeof(GlobalGameManager), "InitHidden");
-            new AnyPatch(mod, typeof(GlobalGameManager), "InitStoryMode");
-            new AnyPatch(mod, typeof(GlobalGameManager), "LoadSaveFile");
-            new AnyPatch(mod, typeof(GlobalGameManager), "ChangeLanguage");
-            new AnyPatch(mod, typeof(GlobalGameManager), "Start");
-            new AnyPatch(mod, typeof(GlobalGameManager), "ExistSaveData");
-            new AnyPatch(mod, typeof(GlobalGameManager), "IsPlaying");
-            new AnyPatch(mod, typeof(GlobalGameManager), "OnDisable");
-            new AnyPatch(mod, typeof(GlobalGameManager), "OnEnable");
-            new AnyPatch(mod, typeof(GlobalGameManager), "OnLevelWasLoaded");
-            new AnyPatch(mod, typeof(GlobalGameManager), "LoadGlobalData");
-            new AnyPatch(mod, typeof(GlobalGameManager), "LoadData");
-            new AnyPatch(mod, typeof(GlobalGameManager), "SaveData");
-            new AnyPatch(mod, typeof(GlobalGameManager), "SaveDataWithCheckPoint");
-        }
-
-        private void PatchCreatureManager(HarmonyInstance mod)
-        {
-            new AnyPatch(mod, typeof(CreatureManager), "Init");
-            new CreatureManagerPatch(mod);
-            new AnyPatch(mod, typeof(CreatureManager), "OnGameInit");
-            new AnyPatch(mod, typeof(CreatureManager), "AddCreature");
-            new AnyPatch(mod, typeof(CreatureManager), "FindCreature");
-            new AnyPatch(mod, typeof(CreatureManager), "GetCreature");
-            new AnyPatch(mod, typeof(CreatureManager), "GetCreatureList");
-            new AnyPatch(mod, typeof(CreatureManager), "GetObserveInfo");
-            new AnyPatch(mod, typeof(CreatureManager), "GetSaveData");
-            new AnyPatch(mod, typeof(CreatureManager), "LoadData");
-            new AnyPatch(mod, typeof(CreatureManager), "ResetProbReductionCounterAll");
-            new AnyPatch(mod, typeof(CreatureManager), "TryGetValue");
-            new AnyPatch(mod, typeof(CreatureManager), "LoadSpecialSkillTable");
-            new AnyPatch(mod, typeof(CreatureManager), "OnStageStart");
-        }
-
-        private void PatchAgentInfoWindow(HarmonyInstance mod)
-        {
-            new AnyPatch(mod, typeof(AgentInfoWindow), "Init");
-            new AnyPatch(mod, typeof(AgentInfoWindow), "Start");
-            new AnyPatch(mod, typeof(AgentInfoWindow), "OnEnable");
-            new AnyPatch(mod, typeof(AgentInfoWindow), "CloseWindow");
-            new AnyPatch(mod, typeof(AgentInfoWindow), "CreateWindow");
-            new AnyPatch(mod, typeof(AgentInfoWindow), "OnDisable");
-            new AnyPatch(mod, typeof(AgentInfoWindow), "GetCurrentColor");
-            new AnyPatch(mod, typeof(AgentInfoWindow), "OnClickPortrait");
-            new AnyPatch(mod, typeof(AgentInfoWindow), "EnforcementWindow");
-            new AnyPatch(mod, typeof(AgentInfoWindow), "OnClearOverlay");
-            new AnyPatch(mod, typeof(AgentInfoWindow), "UnPinCurrentAgent");
-        }
-
-        private void PatchAgentSpriteChanger(HarmonyInstance mod)
-        {
-            new AnyPatch(mod, typeof(AgentSpriteChanger), "ClothesSetting");
-            new AnyPatch(mod, typeof(AgentSpriteChanger), "WeaponSetting");
-            new AnyPatch(mod, typeof(AgentSpriteChanger), "Start");
-        }
+        //private void PatchAgentInfoWindow(HarmonyInstance mod)
+        //{
+        //    new AnyPatch(mod, typeof(AgentInfoWindow), "Init");
+        //    new AnyPatch(mod, typeof(AgentInfoWindow), "Start");
+        //    new AnyPatch(mod, typeof(AgentInfoWindow), "OnEnable");
+        //    new AnyPatch(mod, typeof(AgentInfoWindow), "CloseWindow");
+        //    new AnyPatch(mod, typeof(AgentInfoWindow), "CreateWindow");
+        //    new AnyPatch(mod, typeof(AgentInfoWindow), "OnDisable");
+        //    new AnyPatch(mod, typeof(AgentInfoWindow), "GetCurrentColor");
+        //    new AnyPatch(mod, typeof(AgentInfoWindow), "OnClickPortrait");
+        //    new AnyPatch(mod, typeof(AgentInfoWindow), "EnforcementWindow");
+        //    new AnyPatch(mod, typeof(AgentInfoWindow), "OnClearOverlay");
+        //    new AnyPatch(mod, typeof(AgentInfoWindow), "UnPinCurrentAgent");
+        //}
 
         private void PatchAgentModel(HarmonyInstance mod)
         {
