@@ -73,8 +73,8 @@
   <ItemGroup>
     <Compile Include="Debug\DebugMessage.cs" />
     <Compile Include="Debug\MessageDispatcher.cs" />
-    <Compile Include="Gui\DebugTab.cs" />
-    <Compile Include="Gui\TableTab.cs" />
+    <Compile Include="Gui\Tabs\DebugTab.cs" />
+    <Compile Include="Gui\Tabs\TableTab.cs" />
     <Compile Include="Harmony_Patch.cs" />
     <Compile Include="Gui\HelloWorldGUI.cs" />
     <Compile Include="Debug\Log.cs" />

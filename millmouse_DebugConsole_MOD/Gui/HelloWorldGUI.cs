@@ -14,7 +14,7 @@ namespace MyMod
 
         private void Start()
         {
-            windowRect = new Rect(Screen.width / 2 - 300, Screen.height / 2 - 200, 600, 400);
+            windowRect = new Rect(Screen.width / 2 - 450, Screen.height / 2 - 200, 900, 400);
             DontDestroyOnLoad(this.gameObject);
             debugTab = new DebugTab();
             tableTab = new TableTab();

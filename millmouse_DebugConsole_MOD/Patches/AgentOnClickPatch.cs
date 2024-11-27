@@ -6,10 +6,7 @@ namespace MyMod.Patches
 {
     public class AgentOnClickPatch
     {
-        // Class-level readonly field for the target type.
         private static readonly Type targetType = typeof(AgentModel);
-
-        // Class-level constants for method names.
         private const string targetMethodName = "OnClick";
         private const string patchMethodName = "Postfix_LoggerPatch";  
 
@@ -20,10 +17,7 @@ namespace MyMod.Patches
 
         private void Patch(HarmonyInstance mod)
         {
-            // Use the constant field for the target method name.
             var originalMethod = targetType.GetMethod(targetMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-
-            // Use the constant field for the patch method name.
             var myPatchMethod = typeof(AgentOnClickPatch).GetMethod(patchMethodName, BindingFlags.Static | BindingFlags.Public);
 
             if (originalMethod != null)
@@ -40,8 +34,12 @@ namespace MyMod.Patches
         {
             if (Harmony_Patch.guiInstance != null && Harmony_Patch.guiInstance.debugTab != null)
             {
+
+                //initial log
                 Log.LogAndDebug(
-                "Printed to show that AgentOnClickPatch worked!");
+                "Printed to show that AgentOnClickPatch called!");
+                
+                //do logic ( change visuals of TableTab ) 
             }
         }
     }

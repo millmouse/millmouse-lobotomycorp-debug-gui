@@ -15,7 +15,6 @@ namespace MyMod.Patches
         {
             //PatchAgentModel(mod);
             PatchAgentClick(mod);
-
         }
 
         private void PatchAgentClick(HarmonyInstance mod)
