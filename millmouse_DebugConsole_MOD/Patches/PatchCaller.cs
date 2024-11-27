@@ -15,10 +15,8 @@ namespace MyMod.Patches
         {
             PatchAgentManager(mod);
             PatchResultScreen(mod);
-            //PatchAgentInfoWindow(mod);
             PatchAgentModel(mod);
             PatchAgentHistory(mod);
-            //make a patch specifically for detecting hp up and down of agent. 
         }
 
         private void PatchAgentHistory(HarmonyInstance mod)
@@ -52,21 +50,6 @@ namespace MyMod.Patches
             new AnyPatch(mod, typeof(ResultScreen), "OnClickContinueGame");
             new AnyPatch(mod, typeof(ResultScreen), "AgentReset");
         }
-
-        //private void PatchAgentInfoWindow(HarmonyInstance mod)
-        //{
-        //    new AnyPatch(mod, typeof(AgentInfoWindow), "Init");
-        //    new AnyPatch(mod, typeof(AgentInfoWindow), "Start");
-        //    new AnyPatch(mod, typeof(AgentInfoWindow), "OnEnable");
-        //    new AnyPatch(mod, typeof(AgentInfoWindow), "CloseWindow");
-        //    new AnyPatch(mod, typeof(AgentInfoWindow), "CreateWindow");
-        //    new AnyPatch(mod, typeof(AgentInfoWindow), "OnDisable");
-        //    new AnyPatch(mod, typeof(AgentInfoWindow), "GetCurrentColor");
-        //    new AnyPatch(mod, typeof(AgentInfoWindow), "OnClickPortrait");
-        //    new AnyPatch(mod, typeof(AgentInfoWindow), "EnforcementWindow");
-        //    new AnyPatch(mod, typeof(AgentInfoWindow), "OnClearOverlay");
-        //    new AnyPatch(mod, typeof(AgentInfoWindow), "UnPinCurrentAgent");
-        //}
 
         private void PatchAgentModel(HarmonyInstance mod)
         {

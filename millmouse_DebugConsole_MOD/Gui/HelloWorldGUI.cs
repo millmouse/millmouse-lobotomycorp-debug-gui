@@ -8,6 +8,7 @@ namespace MyMod
     {
         private Rect windowRect;
         public DebugTab debugTab;
+        public TableTab tableTab;
         private bool showWindow = true;
         private int selectedTabIndex = 1;
 
@@ -16,6 +17,7 @@ namespace MyMod
             windowRect = new Rect(Screen.width / 2 - 300, Screen.height / 2 - 200, 600, 400);
             DontDestroyOnLoad(this.gameObject);
             debugTab = new DebugTab();
+            tableTab = new TableTab();
 
             selectedTabIndex = 1;
         }
@@ -34,6 +36,10 @@ namespace MyMod
         {
             GUILayout.BeginHorizontal();
 
+            if (GUILayout.Button("Table"))
+            {
+                selectedTabIndex = 0;
+            }
             if (GUILayout.Button("Debug"))
             {
                 selectedTabIndex = 1;
@@ -41,15 +47,23 @@ namespace MyMod
 
             GUILayout.EndHorizontal();
 
+            GUILayout.BeginVertical();
+
             switch (selectedTabIndex)
             {
+                case 0:
+                    tableTab.Render();
+                    break;
                 case 1:
                     debugTab.Render();
                     break;
             }
 
+            GUILayout.EndVertical();
+
             GUI.DragWindow();
         }
+
 
         private void OnDestroy()
         {

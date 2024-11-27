@@ -68,7 +68,6 @@ namespace MyMod
 
         private void AddToDebugMessages(DebugMessage message)
         {
-            // Avoid duplicates if necessary.
             if (!debugMessages.Exists(dm => dm.Message == message.Message && dm.Color == message.Color))
             {
                 debugMessages.Add(message);
