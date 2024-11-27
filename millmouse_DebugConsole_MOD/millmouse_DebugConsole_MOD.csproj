@@ -80,6 +80,7 @@
     <Compile Include="Debug\Log.cs" />
     <Compile Include="Patches\AgentManagerPatch.cs" />
     <Compile Include="Patches\AgentModelPatch.cs" />
+    <Compile Include="Patches\AgentOnClickPatch.cs" />
     <Compile Include="Patches\AnyPatch.cs" />
     <Compile Include="Patches\CreatureManagerPatch.cs" />
     <Compile Include="Patches\Interface\IPatch.cs" />
