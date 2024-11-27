@@ -172,7 +172,9 @@ namespace MyMod
                 case "Buff": return currentAgent.GetWorkProbBuf().ToString();
                 case "Ego Bonus": return currentAgent.GetEGObonus().workProb.ToString();
                 case "Title Bonus": return currentAgent.titleBonus.workProb.ToString();
-                case "Sefira Ability": return currentAgent.GetTemperanceStatBySefiraAbility().ToString();
+                case "Sefira Ability":
+                    float sefiraAbilityValue = currentAgent.GetTemperanceStatBySefiraAbility() + currentAgent.GetWorkProbBufBySefiraAbility();
+                    return sefiraAbilityValue.ToString();
                 case "Difference": return (currentAgent.workProb - currentAgent.primaryStat.workProb).ToString();
                 default: return "N/A";
             }
