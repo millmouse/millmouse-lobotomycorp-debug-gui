@@ -29,7 +29,7 @@ namespace MyMod
 
         protected void Render()
         {
-            windowRect = GUI.Window(0, windowRect, DrawWindow, "Hello World GUI");
+            windowRect = GUI.Window(0, windowRect, DrawWindow, "LobCoMod GUI");
         }
 
         private void DrawWindow(int windowID)

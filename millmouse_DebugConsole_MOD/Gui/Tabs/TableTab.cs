@@ -27,7 +27,7 @@ namespace MyMod
         public void Render()
         {
             string[] sections = { "HP", "Mental", "Cube Speed", "Work Prob", "Attack Speed", "Movement Speed" };
-            string[] rows = { "Max", "No Modifier", "Buff", "Ego Bonus", "Title Bonus", "Sefira Ability", "Final" };
+            string[] rows = { "Max", "No Modifier", "Buff", "Ego Bonus", "Title Bonus", "Sefira Ability", "Difference" };
             string[,] tableData = new string[rows.Length, sections.Length];
 
             for (int i = 0; i < rows.Length; i++)
@@ -128,7 +128,7 @@ namespace MyMod
                 case "Ego Bonus": return currentAgent.GetEGObonus().hp.ToString();
                 case "Title Bonus": return currentAgent.titleBonus.hp.ToString();
                 case "Sefira Ability": return currentAgent.GetFortitudeStatBySefiraAbility().ToString();
-                case "Final": return (currentAgent.maxHp - currentAgent.primaryStat.maxHP).ToString();
+                case "Difference": return (currentAgent.maxHp - currentAgent.primaryStat.maxHP).ToString();
                 default: return "N/A";
             }
         }
@@ -143,7 +143,7 @@ namespace MyMod
                 case "Ego Bonus": return currentAgent.GetEGObonus().mental.ToString();
                 case "Title Bonus": return currentAgent.titleBonus.mental.ToString();
                 case "Sefira Ability": return currentAgent.GetPrudenceStatBySefiraAbility().ToString();
-                case "Final": return (currentAgent.maxMental - currentAgent.primaryStat.maxMental).ToString();
+                case "Difference": return (currentAgent.maxMental - currentAgent.primaryStat.maxMental).ToString();
                 default: return "N/A";
             }
         }
@@ -158,7 +158,7 @@ namespace MyMod
                 case "Ego Bonus": return currentAgent.GetEGObonus().cubeSpeed.ToString();
                 case "Title Bonus": return currentAgent.titleBonus.cubeSpeed.ToString();
                 case "Sefira Ability": return currentAgent.GetTemperanceStatBySefiraAbility().ToString();
-                case "Final": return (currentAgent.workSpeed - currentAgent.primaryStat.cubeSpeed).ToString();
+                case "Difference": return (currentAgent.workSpeed - currentAgent.primaryStat.cubeSpeed).ToString();
                 default: return "N/A";
             }
         }
@@ -172,8 +172,8 @@ namespace MyMod
                 case "Buff": return currentAgent.GetWorkProbBuf().ToString();
                 case "Ego Bonus": return currentAgent.GetEGObonus().workProb.ToString();
                 case "Title Bonus": return currentAgent.titleBonus.workProb.ToString();
-                case "Sefira Ability": return "N/A";
-                case "Final": return (currentAgent.workProb - currentAgent.primaryStat.workProb).ToString();
+                case "Sefira Ability": return currentAgent.GetTemperanceStatBySefiraAbility().ToString();
+                case "Difference": return (currentAgent.workProb - currentAgent.primaryStat.workProb).ToString();
                 default: return "N/A";
             }
         }
@@ -187,8 +187,10 @@ namespace MyMod
                 case "Buff": return currentAgent.GetAttackSpeedBuf().ToString();
                 case "Ego Bonus": return currentAgent.GetEGObonus().attackSpeed.ToString();
                 case "Title Bonus": return currentAgent.titleBonus.attackSpeed.ToString();
-                case "Sefira Ability": return currentAgent.GetJusticeStatBySefiraAbility().ToString();
-                case "Final": return (currentAgent.attackSpeed - currentAgent.primaryStat.attackSpeed).ToString();
+                case "Sefira Ability":
+                    float sefiraAbilityValue = currentAgent.GetJusticeStatBySefiraAbility() + currentAgent.GetAttackSpeedBufBySefiraAbility();
+                    return sefiraAbilityValue.ToString();
+                case "Difference": return (currentAgent.attackSpeed - currentAgent.primaryStat.attackSpeed).ToString();
                 default: return "N/A";
             }
         }
@@ -202,8 +204,10 @@ namespace MyMod
                 case "Buff": return currentAgent.GetWorkProbBuf().ToString();
                 case "Ego Bonus": return currentAgent.GetEGObonus().movement.ToString();
                 case "Title Bonus": return currentAgent.titleBonus.movementSpeed.ToString();
-                case "Sefira Ability": return "N/A";
-                case "Final": return (currentAgent.movement - currentAgent.primaryStat.movementSpeed).ToString();
+                case "Sefira Ability":
+                    float sefiraAbilityValue = currentAgent.GetJusticeStatBySefiraAbility() + currentAgent.GetMovementBufBySefiraAbility();
+                    return sefiraAbilityValue.ToString();
+                case "Difference": return (currentAgent.movement - currentAgent.primaryStat.movementSpeed).ToString();
                 default: return "N/A";
             }
         }
