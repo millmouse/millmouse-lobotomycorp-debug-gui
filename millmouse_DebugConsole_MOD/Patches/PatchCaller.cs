@@ -13,7 +13,7 @@ namespace MyMod.Patches
     {
         public void CallPatches(HarmonyInstance mod)
         {
-            //PatchAgentModel(mod);
+            PatchAgentModel(mod);
             PatchAgentClick(mod);
         }
 
@@ -22,12 +22,10 @@ namespace MyMod.Patches
             new AgentOnClickPatch(mod);
         }
 
-        //private void PatchAgentModel(HarmonyInstance mod)
-        //{
-        //    new AgentModelPatch(mod, "OnClick");
-        //    new AgentModelPatch(mod, "OnEnterRoom");
-        //    new AgentModelPatch(mod, "OnStageStart");
-        //}
+        private void PatchAgentModel(HarmonyInstance mod)
+        {
+            new AgentModelPatch(mod, "OnClick");
+        }
 
     }
 }

@@ -70,50 +70,57 @@ namespace MyMod.Patches
 
         public static void Postfix_LoggerPatch(AgentModel __instance)
         {
-
             var originalMethod = new StackTrace().GetFrame(1).GetMethod();
             string targetClassName = originalMethod.DeclaringType?.Name ?? "Unknown Class";
             string targetMethodName = originalMethod.Name;
+
             string maxHp = __instance.maxHp.ToString();
-            string maxHpNoModifier = __instance.primaryStat.maxHP.ToString();
+            string maxHpNoMod = __instance.primaryStat.maxHP.ToString();
             string maxHPBuf = __instance.GetMaxHpBuf().ToString();
             string hpEgoBonus = __instance.GetEGObonus().hp.ToString();
             string maxHPPrimaryStatBuf = __instance.GetPrimaryStatBuf().maxHP.ToString();
             string hpTitleBonus = __instance.titleBonus.hp.ToString();
             string hpSefiraAbility = __instance.GetFortitudeStatBySefiraAbility().ToString();
-            string maxMental = __instance.primaryStat.maxMental.ToString();
+
+            string maxMental = __instance.maxMental.ToString();
+            string maxMentalNoMod = __instance.primaryStat.maxMental.ToString();
             string maxMentalBuf = __instance.GetMaxMentalBuf().ToString();
             string mentalEgoBonus = __instance.GetEGObonus().mental.ToString();
             string maxMentalPrimaryStatBuf = __instance.GetPrimaryStatBuf().maxMental.ToString();
             string mentalTitleBonus = __instance.titleBonus.mental.ToString();
             string mentalSefiraAbility = __instance.GetPrudenceStatBySefiraAbility().ToString();
-            string cubeSpeed = __instance.primaryStat.cubeSpeed.ToString();
+
+            string cubeSpeed = __instance.workSpeed.ToString();
+            string cubeSpeedNoMod = __instance.primaryStat.cubeSpeed.ToString();
             string cubeSpeedBuf = __instance.GetCubeSpeedBuf().ToString();
             string cubeEgoBonus = __instance.GetEGObonus().cubeSpeed.ToString();
             string cubeSpeedPrimaryStatBuf = __instance.GetPrimaryStatBuf().cubeSpeed.ToString();
             string cubeSpeedTitleBonus = __instance.titleBonus.cubeSpeed.ToString();
             string cubeSpeedSefiraAbility = __instance.GetTemperanceStatBySefiraAbility().ToString();
 
-            string workProb = __instance.primaryStat.workProb.ToString();
+            string workProb = __instance.workProb.ToString();
+            string workProbNoMod = __instance.primaryStat.workProb.ToString();
             string workProbBuf = __instance.GetWorkProbBuf().ToString();
             string workProbEgoBonus = __instance.GetEGObonus().workProb.ToString();
             string workProbPrimaryStatBuf = __instance.GetPrimaryStatBuf().workProb.ToString();
             string workProbTitleBonus = __instance.titleBonus.workProb.ToString();
-            string attackSpeed = __instance.primaryStat.attackSpeed.ToString();
+
+            string attackSpeed = __instance.attackSpeed.ToString();
+            string attackSpeedNoMod = __instance.primaryStat.attackSpeed.ToString();
             string attackSpeedBuf = __instance.GetAttackSpeedBuf().ToString();
             string attackSpeedEgoBonus = __instance.GetEGObonus().attackSpeed.ToString();
             string attackSpeedPrimaryStatBuf = __instance.GetPrimaryStatBuf().attackSpeed.ToString();
             string attackSpeedTitleBonus = __instance.titleBonus.attackSpeed.ToString();
             string attackSpeedSefiraAbility = __instance.GetJusticeStatBySefiraAbility().ToString();
 
-            string movementSpeed = __instance.primaryStat.movementSpeed.ToString();
+            string movementSpeed = __instance.movement.ToString();
+            string movementSpeedNoMod = __instance.primaryStat.movementSpeed.ToString();
             string movementSpeedBuf = __instance.GetWorkProbBuf().ToString();
             string movementSpeedEgoBonus = __instance.GetEGObonus().movement.ToString();
             string movementSpeedPrimaryStatBuf = __instance.GetPrimaryStatBuf().movementSpeed.ToString();
             string movementSpeedTitleBonus = __instance.titleBonus.movementSpeed.ToString();
             string agentName = __instance?.name ?? "Unknown Agent Name";
             string defenseDetails = GetDefenseDetails(__instance?.defense);
-
 
             if (Harmony_Patch.guiInstance != null && Harmony_Patch.guiInstance.debugTab != null)
             {
@@ -122,7 +129,7 @@ namespace MyMod.Patches
                     $"\n{{{{ HP (RED) }}}}" +
                     $"\nAgent Name: {agentName}," +
                     $"\nMax HP: {maxHp}," +
-                    $"\nMax HP (No Modifier): {maxHpNoModifier}," +
+                    $"\nMax HP (No Modifier): {maxHpNoMod}," +
                     $"\nMax HP (Max HP Buf): {maxHPBuf}," +
                     $"\nHP Ego Bonus: {hpEgoBonus}," +
                     $"\nMax HP Primary Stat Buf: {maxHPPrimaryStatBuf}," +
@@ -132,6 +139,7 @@ namespace MyMod.Patches
                     $"\n{{{{ Mental (WHITE) }}}}" +
                     $"\nAgent Name: {agentName}," +
                     $"\nMax Mental: {maxMental}," +
+                    $"\nMax Mental (No Modifier): {maxMentalNoMod}," +
                     $"\nMax Mental Buf: {maxMentalBuf}," +
                     $"\nMental Ego Bonus: {mentalEgoBonus}," +
                     $"\nMax Mental Primary Stat Buf: {maxMentalPrimaryStatBuf}," +
@@ -141,12 +149,14 @@ namespace MyMod.Patches
                     $"\n{{{{ Work (BLACK) }}}}" +
                     $"\nAgent Name: {agentName}," +
                     $"\nCube Speed: {cubeSpeed}," +
+                    $"\nCube Speed (No Modifier): {cubeSpeedNoMod}," +
                     $"\nCube Speed Buf: {cubeSpeedBuf}," +
                     $"\nCube Ego Bonus: {cubeEgoBonus}," +
                     $"\nCube Speed Primary Stat Buf: {cubeSpeedPrimaryStatBuf}," +
                     $"\nCube Speed Title Bonus: {cubeSpeedTitleBonus}," +
                     $"\nCube Speed Sefira Ability: {cubeSpeedSefiraAbility}," +
                     $"\nWork Probability: {workProb}," +
+                    $"\nWork Prob (No Modifier): {workProbNoMod}," +
                     $"\nWork Prob Buf: {workProbBuf}," +
                     $"\nWork Prob Ego Bonus: {workProbEgoBonus}," +
                     $"\nWork Prob Primary Stat Buf: {workProbPrimaryStatBuf}," +
@@ -155,12 +165,14 @@ namespace MyMod.Patches
                     $"\n{{{{ Attack/Move (PALE) }}}}" +
                     $"\nAgent Name: {agentName}," +
                     $"\nAttack Speed: {attackSpeed}," +
+                    $"\nAttack Speed (No Modifier): {attackSpeedNoMod}," +
                     $"\nAttack Speed Buf: {attackSpeedBuf}," +
                     $"\nAttack Speed Ego Bonus: {attackSpeedEgoBonus}," +
                     $"\nAttack Speed Primary Stat Buf: {attackSpeedPrimaryStatBuf}," +
                     $"\nAttack Speed Title Bonus: {attackSpeedTitleBonus}," +
                     $"\nAttack Speed Sefira Ability: {attackSpeedSefiraAbility}," +
                     $"\nMovement Speed: {movementSpeed}," +
+                    $"\nMovement Speed (No Modifier): {movementSpeedNoMod}," +
                     $"\nMovement Speed Buf: {movementSpeedBuf}," +
                     $"\nMovement Speed Ego Bonus: {movementSpeedEgoBonus}," +
                     $"\nMovement Speed Primary Stat Buf: {movementSpeedPrimaryStatBuf}," +
@@ -169,6 +181,8 @@ namespace MyMod.Patches
 
                     ColorUtils.HexToColor("#ed9172")
                 );
+
+
             }
         }
     }

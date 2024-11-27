@@ -32,15 +32,24 @@ namespace MyMod.Patches
 
         public static void Postfix_LoggerPatch(AgentModel __instance)
         {
-            if (Harmony_Patch.guiInstance != null && Harmony_Patch.guiInstance.debugTab != null)
-            {
+            if (!IsTableTabActive())
+                return;
 
-                //initial log
-                Log.LogAndDebug(
-                "Printed to show that AgentOnClickPatch called!");
-                
-                //do logic ( change visuals of TableTab ) 
+            Log.LogAndDebug("Printed to show that AgentOnClickPatch called!");
+            Log.LogAndDebug("TableTab is initialized and active.");
+            Harmony_Patch.guiInstance.tableTab.SetAgent(__instance);
+
+        }
+
+        private static bool IsTableTabActive()
+        {
+            if (Harmony_Patch.guiInstance.tableTab == null)
+            {
+                Log.LogAndDebug("TableTab is not initialized.");
+                return false;
             }
+
+            return true;
         }
     }
 }
