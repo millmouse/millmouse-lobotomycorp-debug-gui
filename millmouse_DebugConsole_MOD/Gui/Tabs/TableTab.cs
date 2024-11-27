@@ -35,6 +35,7 @@ namespace MyMod
                     tableData[i, j] = GetStatValue(rows[i], sections[j]);
                 }
             }
+
             GUILayout.BeginVertical();
             GUILayout.Label("Agent Stats Table", GUILayout.Height(20));
 
@@ -57,7 +58,9 @@ namespace MyMod
                     {
                         GUI.color = GetColumnColor(sections[j]);
                         GUILayout.Label(tableData[i, j], GUILayout.Width(120));
+                        GUI.color = Color.white;
                     }
+
                     GUILayout.EndHorizontal();
                 }
 
@@ -71,15 +74,15 @@ namespace MyMod
             switch (section)
             {
                 case "HP":
-                    return Color.red;
+                    return ColorUtils.HexToColor("#eb4f44");
                 case "Mental":
-                    return Color.yellow;
+                    return ColorUtils.HexToColor("#ffd15c");
                 case "Cube Speed":
                 case "Work Prob":
-                    return new Color(0.5f, 0, 1);
+                    return ColorUtils.HexToColor("#d099f0");
                 case "Attack Speed":
                 case "Movement Speed":
-                    return new Color(0, 1, 1);
+                    return ColorUtils.HexToColor("#4debca");
                 default:
                     return Color.white;
             }
