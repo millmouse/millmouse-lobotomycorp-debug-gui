@@ -48,14 +48,10 @@ namespace MyMod.Patches
 
             var details = new System.Text.StringBuilder();
             details.AppendLine("===== Agent History Details =====");
-            details.AppendLine($"Work Days: {agentHistory.WorkDay}");
-
-            details.AppendLine("One Day History:");
+            details.AppendLine("\nOne Day History:");
             details.Append(GetHistoryDetails(agentHistory.Oneday));
-
-            details.AppendLine("Total History:");
+            details.AppendLine("\nTotal History:");
             details.Append(GetHistoryDetails(agentHistory.Total));
-
             details.AppendLine("=================================");
             return details.ToString();
         }
@@ -64,27 +60,17 @@ namespace MyMod.Patches
         {
             if (history == null)
             {
-                return "History is null.\n";
+                return "History is null.";
             }
 
             return $@"
-    Work Success: {history.workSuccess}
-    Work Cube Counts: {GetWorkCubeCountsString(history.workCubeCounts)}
-    Work Fail: {history.workFail}
-    Physical Damage: {history.takePhysicalDamage}
-    Mental Damage: {history.takeMentalDamage}
-    Deaths by Creature: {history.deathByCreature}
-    Panics by Creature: {history.panicByCreature}
-    Deaths by Worker: {history.deathByWorker}
-    Panic Count: {history.panic}
-    Damage by Creatures: {history.creatureDamage}
-    Damage by Workers: {history.workerDamage}
-    Panic Worker Damage: {history.panicWorkerDamage}
-    Suppression Damage: {history.suppressDamage}
-    Disposal Count: {history.disposal}
-    Promotion Value: {history.promotionVal}
+Work Cube Counts:
+{GetWorkCubeCountsString(history.workCubeCounts)}
+
+Promotion Value: {history.promotionVal}
 ";
         }
+
 
         private static string GetWorkCubeCountsString(Dictionary<RwbpType, int> workCubeCounts)
         {
@@ -93,14 +79,29 @@ namespace MyMod.Patches
                 return "None";
             }
 
+            // Define the specific order of R, W, B, P
+            var order = new List<RwbpType> { RwbpType.R, RwbpType.W, RwbpType.B, RwbpType.P };
+
             var result = new System.Text.StringBuilder();
-            foreach (var kvp in workCubeCounts)
+            bool first = true;
+
+            // Iterate through the predefined order
+            foreach (var key in order)
             {
-                result.AppendLine($"    {kvp.Key}: {kvp.Value}");
+                if (workCubeCounts.ContainsKey(key))
+                {
+                    if (!first)
+                    {
+                        result.AppendLine();  // Add a newline only between entries, not at the start
+                    }
+                    result.Append($"{key}: {workCubeCounts[key]}");
+                    first = false;
+                }
             }
 
-            return result.ToString();
+            return result.Length > 0 ? result.ToString() : "None";
         }
+
 
         public static void Postfix_LoggerPatch(AgentModel __instance)
         {
@@ -118,6 +119,7 @@ namespace MyMod.Patches
                 {
                     string agentHistoryDetails = GetAgentHistoryDetails(__instance.history);
                     Log.LogAndDebug($"Agent Details:\n{agentHistoryDetails}", ColorUtils.HexToColor("#f7e160"));
+
                 }
 
             }
