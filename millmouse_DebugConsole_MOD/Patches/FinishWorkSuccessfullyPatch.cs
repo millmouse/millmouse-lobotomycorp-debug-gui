@@ -33,20 +33,18 @@ public class FinishWorkSuccessfullyPatch
         // Log method name for debugging purposes
         Log.LogAndDebug($"Target Method: {targetMethodName}");
 
-        var agent = GetAgent(__instance);
+        var agent = StatUtils.GetAgent(__instance);
         if (agent == null) return;
 
-        // Only log the stat related to the RwbpType stored in CalculateLevelExpPatch
         RwbpType rwbpType = CalculateLevelExpPatch.LastRwbpType;
-        string statName = GetStatName(rwbpType);
-        float statValue = GetStatValue(agent, rwbpType);
-        int statLevel = GetStatLevel(agent, rwbpType);
+        string statName = StatUtils.GetStatName(rwbpType);
+        float statValue = StatUtils.GetStatValue(agent, rwbpType);
+        int statLevel = StatUtils.GetStatLevel(agent, rwbpType);
 
         // Log the relevant stat info
         Log.LogAndDebug($"Current Stat Value ({statName}): {statValue}");
         Log.LogAndDebug($"Current Stat Level ({statName}): {statLevel}");
 
-        // Log the monster name
         LogMonsterName(__instance);
     }
 
@@ -71,63 +69,8 @@ public class FinishWorkSuccessfullyPatch
 
     private static void LogMonsterName(UseSkill __instance)
     {
-        string monsterName = GetMonsterName(__instance);
+        string monsterName = StatUtils.GetMonsterName(__instance);
         Log.LogAndDebug($"Monster name: {monsterName}");
     }
 
-    private static string GetMonsterName(UseSkill instance)
-    {
-        var targetCreature = Traverse.Create(instance).Field("targetCreature").GetValue();
-        if (targetCreature == null) return "Unknown Monster";
-
-        var getUnitNameMethod = targetCreature.GetType().GetMethod("GetUnitName", BindingFlags.Public | BindingFlags.Instance);
-        return getUnitNameMethod?.Invoke(targetCreature, null) as string ?? "Unknown Monster";
-    }
-
-    private static string GetStatName(RwbpType rwbpType)
-    {
-        if (rwbpType == RwbpType.R)
-            return "Health (HP)";
-        else if (rwbpType == RwbpType.W)
-            return "Mental";
-        else if (rwbpType == RwbpType.B)
-            return "Work";
-        else if (rwbpType == RwbpType.P)
-            return "Battle";
-        else
-            return "Unknown";
-    }
-
-    private static float GetStatValue(AgentModel agent, RwbpType rwbpType)
-    {
-        var primaryStatExp = Traverse.Create(agent).Field("primaryStatExp").GetValue();
-
-        if (primaryStatExp == null)
-            return 0f;
-
-        if (rwbpType == RwbpType.R)
-            return Traverse.Create(primaryStatExp).Field("hp").GetValue<float>();
-        else if (rwbpType == RwbpType.W)
-            return Traverse.Create(primaryStatExp).Field("mental").GetValue<float>();
-        else if (rwbpType == RwbpType.B)
-            return Traverse.Create(primaryStatExp).Field("work").GetValue<float>();
-        else if (rwbpType == RwbpType.P)
-            return Traverse.Create(primaryStatExp).Field("battle").GetValue<float>();
-        else
-            return 0f;
-    }
-
-    private static int GetStatLevel(AgentModel agent, RwbpType rwbpType)
-    {
-        if (rwbpType == RwbpType.R)
-            return agent.fortitudeLevel;
-        else if (rwbpType == RwbpType.W)
-            return agent.prudenceLevel;
-        else if (rwbpType == RwbpType.B)
-            return agent.temperanceLevel;
-        else if (rwbpType == RwbpType.P)
-            return agent.justiceLevel;
-        else
-            return 0;
-    }
 }
