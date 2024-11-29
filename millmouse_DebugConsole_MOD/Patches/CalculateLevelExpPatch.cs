@@ -32,14 +32,33 @@ namespace MyMod.Patches
         public static void Postfix_LoggerPatch(UseSkill __instance, RwbpType rwbpType, float __result)
         {
             var agentObject = Traverse.Create(__instance).Field("agent").GetValue();
-            string agentName = (agentObject as AgentModel)?.name ?? "Unknown Agent";
-            string monsterName = GetMonsterName(__instance);
-            Log.LogAndDebug($"Agent name: {agentName}");
-            Log.LogAndDebug($"Monster name: {monsterName}");
-            Log.LogAndDebug($"CalculateLevelExp called with RwbpType: {rwbpType}");
-            Log.LogAndDebug($"CalculateLevelExp returned: {__result}");
-        }
+            if (agentObject == null)
+            {
+                Log.LogAndDebug("Agent is null or invalid.");
+                return;
+            }
 
+            var agent = agentObject as AgentModel;
+            if (agent == null)
+            {
+                Log.LogAndDebug("Failed to cast agent.");
+                return;
+            }
+
+            // Get the RwbpType stat and its corresponding value
+            string statName = GetStatName(rwbpType);
+            float statValue = GetStatValue(agent, rwbpType);
+            int statLevel = GetStatLevel(agent, rwbpType); // Get the corresponding stat level
+            string monsterName = GetMonsterName(__instance);
+
+            // Log the gathered information
+            Log.LogAndDebug($"Agent Name: {agent.name}");
+            Log.LogAndDebug($"Monster name: {monsterName}");
+            Log.LogAndDebug($"RwbpType: {rwbpType} ({statName})");
+            Log.LogAndDebug($"Current Stat Value: {statValue}");
+            Log.LogAndDebug($"Current Stat Level: {statLevel}");
+            Log.LogAndDebug($"CalculateLevelExp Result: {__result}");
+        }
         private static string GetMonsterName(UseSkill instance)
         {
             var targetCreature = Traverse.Create(instance).Field("targetCreature").GetValue();
@@ -47,6 +66,53 @@ namespace MyMod.Patches
 
             var getUnitNameMethod = targetCreature.GetType().GetMethod("GetUnitName", BindingFlags.Public | BindingFlags.Instance);
             return getUnitNameMethod?.Invoke(targetCreature, null) as string ?? "Unknown Monster";
+        }
+    private static string GetStatName(RwbpType rwbpType)
+        {
+            if (rwbpType == RwbpType.R)
+                return "Health (HP)";
+            else if (rwbpType == RwbpType.W)
+                return "Mental";
+            else if (rwbpType == RwbpType.B)
+                return "Work";
+            else if (rwbpType == RwbpType.P)
+                return "Battle";
+            else
+                return "Unknown";
+        }
+
+        private static float GetStatValue(AgentModel agent, RwbpType rwbpType)
+        {
+            var primaryStatExp = Traverse.Create(agent).Field("primaryStatExp").GetValue();
+
+            if (primaryStatExp == null)
+                return 0f; // Default to 0 if the field is not accessible.
+
+            if (rwbpType == RwbpType.R)
+                return Traverse.Create(primaryStatExp).Field("hp").GetValue<float>();
+            else if (rwbpType == RwbpType.W)
+                return Traverse.Create(primaryStatExp).Field("mental").GetValue<float>();
+            else if (rwbpType == RwbpType.B)
+                return Traverse.Create(primaryStatExp).Field("work").GetValue<float>();
+            else if (rwbpType == RwbpType.P)
+                return Traverse.Create(primaryStatExp).Field("battle").GetValue<float>();
+            else
+                return 0f; // Default for unknown types.
+        }
+
+        private static int GetStatLevel(AgentModel agent, RwbpType rwbpType)
+        {
+            // Retrieve the corresponding stat level based on RwbpType
+            if (rwbpType == RwbpType.R)
+                return agent.fortitudeLevel; 
+            else if (rwbpType == RwbpType.W)
+                return agent.prudenceLevel; 
+            else if (rwbpType == RwbpType.B)
+                return agent.temperanceLevel; 
+            else if (rwbpType == RwbpType.P)
+                return agent.justiceLevel; 
+            else
+                return 0; 
         }
     }
 }
