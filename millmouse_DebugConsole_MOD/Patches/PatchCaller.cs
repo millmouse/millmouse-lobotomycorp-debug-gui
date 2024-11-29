@@ -13,17 +13,18 @@ namespace MyMod.Patches
     {
         public void CallPatches(HarmonyInstance mod)
         {
-            PatchAgentModel(mod);
+            //PatchAgentModel(mod);
             //PatchAgentHistory(mod);
-            PatchEXPStats(mod);
+            //PatchEXPStats(mod);
+            PatchCalculateLevelExp(mod);
         }
 
         private void PatchEXPStats(HarmonyInstance mod)
         {
-            new AnyPatch(mod,typeof(WorkerPrimaryStatExp), "Init");
-            new AnyPatch(mod,typeof(AgentModel), "UpdatePrimaryStat");
-            new AnyPatch(mod,typeof(AgentModel), "UpdateBestRwbp");
-            new AnyPatch(mod,typeof(AgentModel), "CalculateStatLevel");
+            new AnyPatch(mod, typeof(WorkerPrimaryStatExp), "Init");
+            new AnyPatch(mod, typeof(AgentModel), "UpdatePrimaryStat");
+            new AnyPatch(mod, typeof(AgentModel), "UpdateBestRwbp");
+            new AnyPatch(mod, typeof(AgentModel), "CalculateStatLevel");
             new AnyPatch(mod, typeof(WorkerPrimaryStat), "UpdateStat");
             new AnyPatch(mod, typeof(WorkerPrimaryStat), "GetAddedStat");
             new AnyPatch(mod, typeof(WorkerPrimaryStat), "MaxStatR");
@@ -35,6 +36,11 @@ namespace MyMod.Patches
             new AnyPatch(mod, typeof(UseSkill), "FinishWorkSuccessfully");
             new AnyPatch(mod, typeof(UseSkill), "GetFeelingState");
             new AnyPatch(mod, typeof(UseSkill), "GetSuccessCubeCount");
+        }
+
+        private void PatchCalculateLevelExp(HarmonyInstance mod)
+        {
+            new CalculateLevelExpPatch(mod);
         }
 
         private void PatchAgentHistory(HarmonyInstance mod)
