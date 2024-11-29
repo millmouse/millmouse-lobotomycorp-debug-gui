@@ -23,6 +23,18 @@ namespace MyMod.Patches
             new AnyPatch(mod,typeof(WorkerPrimaryStatExp), "Init");
             new AnyPatch(mod,typeof(AgentModel), "UpdatePrimaryStat");
             new AnyPatch(mod,typeof(AgentModel), "UpdateBestRwbp");
+            new AnyPatch(mod,typeof(AgentModel), "CalculateStatLevel");
+            new AnyPatch(mod, typeof(WorkerPrimaryStat), "UpdateStat");
+            new AnyPatch(mod, typeof(WorkerPrimaryStat), "GetAddedStat");
+            new AnyPatch(mod, typeof(WorkerPrimaryStat), "MaxStatR");
+            new AnyPatch(mod, typeof(WorkerPrimaryStat), "MaxStatW");
+            new AnyPatch(mod, typeof(WorkerPrimaryStat), "MaxStatB");
+            new AnyPatch(mod, typeof(WorkerPrimaryStat), "MaxStatP");
+
+            new AnyPatch(mod, typeof(UseSkill), "CalculateLevelExp");
+            new AnyPatch(mod, typeof(UseSkill), "FinishWorkSuccessfully");
+            new AnyPatch(mod, typeof(UseSkill), "GetFeelingState");
+            new AnyPatch(mod, typeof(UseSkill), "GetSuccessCubeCount");
         }
 
         private void PatchAgentHistory(HarmonyInstance mod)
