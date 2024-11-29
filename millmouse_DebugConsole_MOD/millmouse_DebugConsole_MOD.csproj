@@ -90,6 +90,7 @@
     <Compile Include="Patches\StartGamePatch.cs" />
     <Compile Include="Patches\GameManagerPatch.cs" />
     <Compile Include="Util\ColorUtils.cs" />
+    <Compile Include="Util\StatUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resources" />
