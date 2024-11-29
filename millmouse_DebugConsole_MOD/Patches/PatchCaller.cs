@@ -13,10 +13,11 @@ namespace MyMod.Patches
     {
         public void CallPatches(HarmonyInstance mod)
         {
-            //PatchAgentModel(mod);
+            PatchAgentModel(mod);
             //PatchAgentHistory(mod);
             //PatchEXPStats(mod);
             PatchCalculateLevelExp(mod);
+            PatchFinishWorkSuccessfully(mod);
         }
 
         private void PatchEXPStats(HarmonyInstance mod)
@@ -41,6 +42,11 @@ namespace MyMod.Patches
         private void PatchCalculateLevelExp(HarmonyInstance mod)
         {
             new CalculateLevelExpPatch(mod);
+        }
+
+        private void PatchFinishWorkSuccessfully(HarmonyInstance mod)
+        {
+            new FinishWorkSuccessfullyPatch(mod);
         }
 
         private void PatchAgentHistory(HarmonyInstance mod)
