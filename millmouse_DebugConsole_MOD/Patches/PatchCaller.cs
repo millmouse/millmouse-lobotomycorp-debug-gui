@@ -22,6 +22,7 @@ namespace MyMod.Patches
         {
             new AnyPatch(mod,typeof(WorkerPrimaryStatExp), "Init");
             new AnyPatch(mod,typeof(AgentModel), "UpdatePrimaryStat");
+            new AnyPatch(mod,typeof(AgentModel), "UpdateBestRwbp");
         }
 
         private void PatchAgentHistory(HarmonyInstance mod)

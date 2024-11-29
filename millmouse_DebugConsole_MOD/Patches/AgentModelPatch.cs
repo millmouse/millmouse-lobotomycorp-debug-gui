@@ -102,6 +102,33 @@ Promotion Value: {history.promotionVal}
             return result.Length > 0 ? result.ToString() : "None";
         }
 
+        private static string GetAgentStatDetails(AgentModel agent)
+        {
+            if (agent == null)
+            {
+                return "Agent is null. No details available.";
+            }
+
+            var sb = new System.Text.StringBuilder();
+
+            // Gather primary stat experience details
+            sb.AppendLine("Primary Stat Experience:");
+            sb.AppendLine($"- Battle: {agent.primaryStatExp?.battle ?? 0}");
+            sb.AppendLine($"- Work: {agent.primaryStatExp?.work ?? 0}");
+            sb.AppendLine($"- Mental: {agent.primaryStatExp?.mental ?? 0}");
+            sb.AppendLine($"- HP: {agent.primaryStatExp?.hp ?? 0}");
+
+            //// Gather title bonus details
+            //sb.AppendLine("Title Bonuses:");
+            //sb.AppendLine($"- Attack Speed: {agent.titleBonus?.attackSpeed ?? 0}");
+            //sb.AppendLine($"- Movement Speed: {agent.titleBonus?.movementSpeed ?? 0}");
+            //sb.AppendLine($"- Work Probability: {agent.titleBonus?.workProb ?? 0}");
+            //sb.AppendLine($"- Cube Speed: {agent.titleBonus?.cubeSpeed ?? 0}");
+            //sb.AppendLine($"- Max Mental: {agent.titleBonus?.maxMental ?? 0}");
+            //sb.AppendLine($"- Max HP: {agent.titleBonus?.maxHP ?? 0}");
+
+            return sb.ToString();
+        }
 
         public static void Postfix_LoggerPatch(AgentModel __instance)
         {
@@ -117,12 +144,12 @@ Promotion Value: {history.promotionVal}
                 Log.LogAndDebug($"Logged from class: {targetClassName}, method: {targetMethodName}, Agent Name: {agentName}", ColorUtils.HexToColor("#f7e160"));
                 if (__instance?.history != null)
                 {
-                    string agentHistoryDetails = GetAgentHistoryDetails(__instance.history);
-                    Log.LogAndDebug($"Agent Details:\n{agentHistoryDetails}", ColorUtils.HexToColor("#f7e160"));
-
+                    string agentStatDetails = GetAgentStatDetails(__instance);
+                    Log.LogAndDebug($"Agent Details:\n{agentStatDetails}", ColorUtils.HexToColor("#f7e160"));
                 }
 
             }
         }
+
     }
 }
