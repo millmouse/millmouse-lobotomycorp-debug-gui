@@ -118,18 +118,10 @@ Promotion Value: {history.promotionVal}
             sb.AppendLine($"- Mental: {agent.primaryStatExp?.mental ?? 0}");
             sb.AppendLine($"- HP: {agent.primaryStatExp?.hp ?? 0}");
 
-            //// Gather title bonus details
-            //sb.AppendLine("Title Bonuses:");
-            //sb.AppendLine($"- Attack Speed: {agent.titleBonus?.attackSpeed ?? 0}");
-            //sb.AppendLine($"- Movement Speed: {agent.titleBonus?.movementSpeed ?? 0}");
-            //sb.AppendLine($"- Work Probability: {agent.titleBonus?.workProb ?? 0}");
-            //sb.AppendLine($"- Cube Speed: {agent.titleBonus?.cubeSpeed ?? 0}");
-            //sb.AppendLine($"- Max Mental: {agent.titleBonus?.maxMental ?? 0}");
-            //sb.AppendLine($"- Max HP: {agent.titleBonus?.maxHP ?? 0}");
-
             return sb.ToString();
         }
 
+        
         public static void Postfix_LoggerPatch(AgentModel __instance)
         {
 
