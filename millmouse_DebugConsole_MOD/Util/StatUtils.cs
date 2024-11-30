@@ -45,7 +45,7 @@ namespace MyMod
                 return "Unknown";
         }
 
-        public static float GetStatValue(AgentModel agent, RwbpType rwbpType)
+        public static float GetStatEXPValue(AgentModel agent, RwbpType rwbpType)
         {
             var primaryStatExp = Traverse.Create(agent).Field("primaryStatExp").GetValue();
             if (primaryStatExp == null)
@@ -59,6 +59,24 @@ namespace MyMod
                 return Traverse.Create(primaryStatExp).Field("work").GetValue<float>();
             else if (rwbpType == RwbpType.P)
                 return Traverse.Create(primaryStatExp).Field("battle").GetValue<float>();
+            else
+                return 0f;
+        }
+
+        public static float GetStatPrimaryValue(AgentModel agent, RwbpType rwbpType)
+        {
+            var primaryStatExp = agent.primaryStat;
+            if (primaryStatExp == null)
+                return 0f;
+
+            if (rwbpType == RwbpType.R)
+                return primaryStatExp.hp;
+            else if (rwbpType == RwbpType.W)
+                return primaryStatExp.mental;
+            else if (rwbpType == RwbpType.B)
+                return primaryStatExp.work; 
+            else if (rwbpType == RwbpType.P)
+                return primaryStatExp.battle;
             else
                 return 0f;
         }
