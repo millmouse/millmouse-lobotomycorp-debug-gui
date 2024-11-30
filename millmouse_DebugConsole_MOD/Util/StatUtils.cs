@@ -9,6 +9,28 @@ namespace MyMod
 {
     public static class StatUtils
     {
+
+
+        public static int CalculateExpForLevel(int level)
+        {
+            switch (level)
+            {
+                case 1:
+                    return 30; 
+                case 2:
+                    return 45; 
+                case 3:
+                    return 65;
+                case 4:
+                    return 85;
+                case 5: // Level EX is gained supposedly through EGO Gifts, not leveling.
+                    return 0; 
+                default:
+                    //throw new ArgumentOutOfRangeException(nameof(level), "Level must be between 1 and 5.");
+                    return 0;
+            }
+        }
+
         public static string GetStatName(RwbpType rwbpType)
         {
             if (rwbpType == RwbpType.R)
