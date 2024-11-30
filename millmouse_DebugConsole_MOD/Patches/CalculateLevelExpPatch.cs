@@ -9,7 +9,6 @@ public class CalculateLevelExpPatch
     private const string targetMethodName = "CalculateLevelExp";
     private const string patchMethodName = "Postfix_LoggerPatch";
 
-    // Static field to store the RwbpType
     public static RwbpType LastRwbpType { get; private set; }
 
     public CalculateLevelExpPatch(HarmonyInstance mod)
@@ -33,7 +32,6 @@ public class CalculateLevelExpPatch
 
     public static void Postfix_LoggerPatch(UseSkill __instance, RwbpType rwbpType, float __result)
     {
-        // Log method name for debugging purposes
         Log.LogAndDebug($"Target Method: {targetMethodName}");
 
         var agentObject = Traverse.Create(__instance).Field("agent").GetValue();
@@ -50,13 +48,11 @@ public class CalculateLevelExpPatch
             return;
         }
 
-        // Store the RwbpType for later 
         LastRwbpType = rwbpType;
 
         string statName = StatUtils.GetStatName(rwbpType);
         float statValue = StatUtils.GetStatEXPValue(agent, rwbpType);
-        int statLevel = StatUtils.GetStatLevel(agent, rwbpType); // Get the corresponding stat level
-        string monsterName = StatUtils.GetMonsterName(__instance);
+        int statLevel = StatUtils.GetStatLevel(agent, rwbpType);        string monsterName = StatUtils.GetMonsterName(__instance);
 
         Log.LogAndDebug($"Agent Name: {agent.name}");
         Log.LogAndDebug($"Monster name: {monsterName}");

@@ -3,6 +3,7 @@ using MyMod;
 using System.Reflection;
 using System;
 using UnityEngine;
+using MyMod.Util.data;
 
 public class FinishWorkSuccessfullyPatch
 {
@@ -30,73 +31,95 @@ public class FinishWorkSuccessfullyPatch
     }
     public static void Postfix_LoggerPatch(UseSkill __instance)
     {
-        // Log method name for debugging purposes
-        Log.LogAndDebug($"Target Method: {targetMethodName}");
+        LogMethodName();
 
-        // Retrieve agent and verify it exists
-        var agent = StatUtils.GetAgent(__instance);
+        var agent = RetrieveAgent(__instance);
         if (agent == null) return;
 
-        // Retrieve required stats
+        var stats = RetrieveStats(agent);
+
+        LogStatInformation(stats);
+
+        CongratulateOnLevelProgress(stats);
+
+        string progressMessage = HandleProgressMessage(stats);
+        Log.LogAndDebug(progressMessage);
+
+        LogMonsterName(__instance);
+    }
+
+    private static void LogMethodName()
+    {
+        Log.LogAndDebug($"Target Method: {targetMethodName}");
+    }
+
+    private static AgentModel RetrieveAgent(UseSkill __instance)
+    {
+        var agent = StatUtils.GetAgent(__instance);
+        return agent;
+    }
+
+    private static StatStats RetrieveStats(AgentModel agent)
+    {
         RwbpType rwbpType = CalculateLevelExpPatch.LastRwbpType;
         string statName = StatUtils.GetStatName(rwbpType);
         float statValue = StatUtils.GetStatEXPValue(agent, rwbpType);
         int currentStatLevel = StatUtils.GetStatLevel(agent, rwbpType);
         int primaryValue = StatUtils.GetStatPrimaryValue(agent, rwbpType);
-        int primaryWithExpModifier = Mathf.RoundToInt(statValue) + primaryValue;
+        int primaryWithExpModifier = Convert.ToInt32(Math.Round(statValue)) + primaryValue;
 
-        // Determine next level based on Primary+Exp
         int nextLevel = StatUtils.GetNextLevel(primaryWithExpModifier);
         int minExpForNextLevel = StatUtils.GetMinStatForLevel(nextLevel);
 
-        // Log relevant stat information
-        Log.LogAndDebug($"Current Stat Value ({statName}): {statValue}");
-        Log.LogAndDebug($"Current Stat Level ({statName}): {currentStatLevel}");
-        Log.LogAndDebug($"Current Primary+Exp ({statName}): {primaryWithExpModifier}");
-        Log.LogAndDebug($"Next Level for ({statName}): {nextLevel}");
-        Log.LogAndDebug($"Min Exp For next level in stat ({statName}): {minExpForNextLevel}");
+        return new StatStats(rwbpType, statName, statValue, currentStatLevel, primaryValue, primaryWithExpModifier, nextLevel, minExpForNextLevel);
+    }
 
-        // Congratulate if next level is higher than current level
-        int reachedLevel = AgentModel.CalculateStatLevel(primaryWithExpModifier);
-        if (nextLevel >= currentStatLevel + 2)
+    private static void LogStatInformation(StatStats stats)
+    {
+        Log.LogAndDebug($"Current Stat Value ({stats.StatName}): {stats.StatValue}");
+        Log.LogAndDebug($"Current Stat Level ({stats.StatName}): {stats.CurrentStatLevel}");
+        Log.LogAndDebug($"Current Primary+Exp ({stats.StatName}): {stats.PrimaryWithExpModifier}");
+        Log.LogAndDebug($"Next Level for ({stats.StatName}): {stats.NextLevel}");
+        Log.LogAndDebug($"Min Exp For next level in stat ({stats.StatName}): {stats.MinExpForNextLevel}");
+    }
+
+    private static void CongratulateOnLevelProgress(StatStats stats)
+    {
+        int reachedLevel = AgentModel.CalculateStatLevel(stats.PrimaryWithExpModifier);
+        if (stats.NextLevel >= stats.CurrentStatLevel + 2)
         {
-            Log.LogAndDebug($"Congratulations! {statName} has reached level {reachedLevel}, from previous level {currentStatLevel}.");
+            Log.LogAndDebug($"Congratulations! {stats.StatName} has reached level {reachedLevel}, from previous level {stats.CurrentStatLevel}.");
         }
+    }
 
-        // Handle edge cases for progressPercentage
+    private static string HandleProgressMessage(StatStats stats)
+    {
         string progressMessage;
-        if (minExpForNextLevel == 0) // Avoid division by zero
-        {
-            progressMessage = $"Progress to level {nextLevel} reached. Maximum level reached.";
+
+        if (stats.MinExpForNextLevel == 0)        {
+            progressMessage = $"Progress to level {stats.NextLevel} reached. Maximum level reached.";
         }
         else
         {
-            float progressToNextLevel = (float)primaryWithExpModifier / minExpForNextLevel;
+            float progressToNextLevel = (float)stats.PrimaryWithExpModifier / stats.MinExpForNextLevel;
             float progressPercentage = progressToNextLevel * 100;
 
             if (progressPercentage <= 0)
             {
-                progressMessage = $"Progress to level {nextLevel} not started.";
+                progressMessage = $"Progress to level {stats.NextLevel} not started.";
             }
             else if (progressPercentage >= 100)
             {
-                progressMessage = $"Progress to level {nextLevel} reached. Maximum level reached.";
+                progressMessage = $"Progress to level {stats.NextLevel} reached. Maximum level reached.";
             }
             else
             {
-                progressMessage = $"{statName} progress to next level: ({primaryWithExpModifier} / {minExpForNextLevel}) = ({progressPercentage:F2}%) close to the next level threshold.";
+                progressMessage = $"{stats.StatName} progress to next level: ({stats.PrimaryWithExpModifier} / {stats.MinExpForNextLevel}) = ({progressPercentage:F2}%) close to the next level threshold.";
             }
         }
 
-        // Log the progress message
-        Log.LogAndDebug(progressMessage);
-
-        // Log the monster name if needed
-        LogMonsterName(__instance);
+        return progressMessage;
     }
-
-
-
 
     private static void LogMonsterName(UseSkill __instance)
     {

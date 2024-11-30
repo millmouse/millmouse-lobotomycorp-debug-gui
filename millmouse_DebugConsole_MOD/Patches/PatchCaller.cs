@@ -14,8 +14,6 @@ namespace MyMod.Patches
         public void CallPatches(HarmonyInstance mod)
         {
             PatchAgentModel(mod);
-            //PatchAgentHistory(mod);
-            //PatchEXPStats(mod);
             PatchCalculateLevelExp(mod);
             PatchFinishWorkSuccessfully(mod);
         }
@@ -91,7 +89,6 @@ namespace MyMod.Patches
         private void PatchAgentModel(HarmonyInstance mod)
         {
             new AgentModelPatch(mod, "OnClick");
-            //new AgentModelPatch(mod, "OnStageStart");
         }
 
     }

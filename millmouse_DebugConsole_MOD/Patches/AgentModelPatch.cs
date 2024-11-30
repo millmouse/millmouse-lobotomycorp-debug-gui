@@ -79,20 +79,18 @@ Promotion Value: {history.promotionVal}
                 return "None";
             }
 
-            // Define the specific order of R, W, B, P
             var order = new List<RwbpType> { RwbpType.R, RwbpType.W, RwbpType.B, RwbpType.P };
 
             var result = new System.Text.StringBuilder();
             bool first = true;
 
-            // Iterate through the predefined order
             foreach (var key in order)
             {
                 if (workCubeCounts.ContainsKey(key))
                 {
                     if (!first)
                     {
-                        result.AppendLine();  // Add a newline only between entries, not at the start
+                        result.AppendLine();
                     }
                     result.Append($"{key}: {workCubeCounts[key]}");
                     first = false;
@@ -111,7 +109,6 @@ Promotion Value: {history.promotionVal}
 
             var sb = new System.Text.StringBuilder();
 
-            // Gather primary stat experience details
             sb.AppendLine("Primary Stat Experience:");
             sb.AppendLine($"- Battle: {agent.primaryStatExp?.battle ?? 0}");
             sb.AppendLine($"- Work: {agent.primaryStatExp?.work ?? 0}");
@@ -129,7 +126,7 @@ Promotion Value: {history.promotionVal}
             return sb.ToString();
         }
 
-        
+
         public static void Postfix_LoggerPatch(AgentModel __instance)
         {
 
@@ -138,7 +135,6 @@ Promotion Value: {history.promotionVal}
             string targetMethodName = originalMethod.Name;
 
             string agentName = __instance?.name ?? "Unknown Agent Name";
-            //AgentHistory history = __instance.history;
             if (Harmony_Patch.guiInstance != null && Harmony_Patch.guiInstance.debugTab != null)
             {
                 Log.LogAndDebug($"Logged from class: {targetClassName}, method: {targetMethodName}, Agent Name: {agentName}", ColorUtils.HexToColor("#f7e160"));
