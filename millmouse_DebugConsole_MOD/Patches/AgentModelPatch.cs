@@ -118,6 +118,14 @@ Promotion Value: {history.promotionVal}
             sb.AppendLine($"- Mental: {agent.primaryStatExp?.mental ?? 0}");
             sb.AppendLine($"- HP: {agent.primaryStatExp?.hp ?? 0}");
 
+            sb.AppendLine("Current Primary Stat Values:");
+            sb.AppendLine($"- Battle: {agent.primaryStat?.battle ?? 0}");
+            sb.AppendLine($"- Work: {agent.primaryStat?.work ?? 0}");
+            sb.AppendLine($"- Mental: {agent.primaryStat?.mental ?? 0}");
+            sb.AppendLine($"- HP: {agent.primaryStat?.hp ?? 0}");
+
+
+
             return sb.ToString();
         }
 

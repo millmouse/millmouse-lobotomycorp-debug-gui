@@ -8,6 +8,8 @@ public class CalculateLevelExpPatch
     private static readonly Type targetType = typeof(UseSkill);
     private const string targetMethodName = "CalculateLevelExp";
     private const string patchMethodName = "Postfix_LoggerPatch";
+
+    // Static field to store the RwbpType
     public static RwbpType LastRwbpType { get; private set; }
 
     public CalculateLevelExpPatch(HarmonyInstance mod)
@@ -52,7 +54,7 @@ public class CalculateLevelExpPatch
         LastRwbpType = rwbpType;
 
         string statName = StatUtils.GetStatName(rwbpType);
-        float statValue = StatUtils.GetStatValue(agent, rwbpType);
+        float statValue = StatUtils.GetStatEXPValue(agent, rwbpType);
         int statLevel = StatUtils.GetStatLevel(agent, rwbpType); // Get the corresponding stat level
         string monsterName = StatUtils.GetMonsterName(__instance);
 
@@ -63,5 +65,6 @@ public class CalculateLevelExpPatch
         Log.LogAndDebug($"Current Stat Level: {statLevel}");
         Log.LogAndDebug($"CalculateLevelExp Result: {__result}");
     }
+
 
 }

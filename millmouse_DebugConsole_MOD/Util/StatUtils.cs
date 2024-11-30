@@ -11,25 +11,42 @@ namespace MyMod
     {
 
 
-        public static int CalculateExpForLevel(int level)
+        public static int GetMinStatForLevel(int level)
         {
             switch (level)
             {
                 case 1:
-                    return 30; 
+                    return 0; // Minimum stat for level 1 is 0 (since stat < 30 falls under level 1)
                 case 2:
-                    return 45; 
+                    return 30; // Minimum stat for level 2 is 30 (since stat >= 30 and < 45)
                 case 3:
-                    return 65;
+                    return 45; // Minimum stat for level 3 is 45 (since stat >= 45 and < 65)
                 case 4:
-                    return 85;
-                case 5: // Level EX is gained supposedly through EGO Gifts, not leveling.
-                    return 0; 
+                    return 65; // Minimum stat for level 4 is 65 (since stat >= 65 and < 85)
+                case 5:
+                    return 85; // Minimum stat for level 5 is 85 (since stat >= 85)
                 default:
-                    //throw new ArgumentOutOfRangeException(nameof(level), "Level must be between 1 and 5.");
                     return 0;
             }
         }
+
+        public static int GetNextLevel(int currentStat)
+        {
+            for (int level = 1; level <= 5; level++)
+            {
+                int minStatForLevel = GetMinStatForLevel(level);
+
+                if (currentStat < minStatForLevel)
+                {
+                    return level; // Return the next level to be reached
+                }
+            }
+            // If the stat is high enough for level 5, return 6 or indicate max level
+            return 6; // If stat is greater than or equal to the min stat for level 5, the next level is 6 (max level reached)
+        }
+
+
+
 
         public static string GetStatName(RwbpType rwbpType)
         {
