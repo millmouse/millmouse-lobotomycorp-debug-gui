@@ -47,25 +47,7 @@ namespace MyMod
 
         public static float GetStatEXPValue(AgentModel agent, RwbpType rwbpType)
         {
-            var primaryStatExp = Traverse.Create(agent).Field("primaryStatExp").GetValue();
-            if (primaryStatExp == null)
-                return 0f;
-
-            if (rwbpType == RwbpType.R)
-                return Traverse.Create(primaryStatExp).Field("hp").GetValue<float>();
-            else if (rwbpType == RwbpType.W)
-                return Traverse.Create(primaryStatExp).Field("mental").GetValue<float>();
-            else if (rwbpType == RwbpType.B)
-                return Traverse.Create(primaryStatExp).Field("work").GetValue<float>();
-            else if (rwbpType == RwbpType.P)
-                return Traverse.Create(primaryStatExp).Field("battle").GetValue<float>();
-            else
-                return 0f;
-        }
-
-        public static float GetStatPrimaryValue(AgentModel agent, RwbpType rwbpType)
-        {
-            var primaryStatExp = agent.primaryStat;
+            var primaryStatExp = agent.primaryStatExp;
             if (primaryStatExp == null)
                 return 0f;
 
@@ -79,6 +61,24 @@ namespace MyMod
                 return primaryStatExp.battle;
             else
                 return 0f;
+        }
+
+        public static int GetStatPrimaryValue(AgentModel agent, RwbpType rwbpType)
+        {
+            var primaryStat = agent.primaryStat;
+            if (primaryStat == null)
+                return 0;
+
+            if (rwbpType == RwbpType.R)
+                return primaryStat.hp;
+            else if (rwbpType == RwbpType.W)
+                return primaryStat.mental;
+            else if (rwbpType == RwbpType.B)
+                return primaryStat.work; 
+            else if (rwbpType == RwbpType.P)
+                return primaryStat.battle;
+            else
+                return 0;
         }
 
         public static int GetStatLevel(AgentModel agent, RwbpType rwbpType)
