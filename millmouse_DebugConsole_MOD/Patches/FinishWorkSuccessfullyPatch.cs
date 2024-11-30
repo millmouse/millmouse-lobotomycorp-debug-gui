@@ -8,7 +8,6 @@ public class FinishWorkSuccessfullyPatch
     private static readonly Type targetType = typeof(UseSkill);
     private const string targetMethodName = "FinishWorkSuccessfully";
     private const string patchMethodName = "Postfix_LoggerPatch";
-
     public FinishWorkSuccessfullyPatch(HarmonyInstance mod)
     {
         Patch(mod);

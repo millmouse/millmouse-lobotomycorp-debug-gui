@@ -8,8 +8,6 @@ public class CalculateLevelExpPatch
     private static readonly Type targetType = typeof(UseSkill);
     private const string targetMethodName = "CalculateLevelExp";
     private const string patchMethodName = "Postfix_LoggerPatch";
-
-    // Static field to store the RwbpType
     public static RwbpType LastRwbpType { get; private set; }
 
     public CalculateLevelExpPatch(HarmonyInstance mod)
