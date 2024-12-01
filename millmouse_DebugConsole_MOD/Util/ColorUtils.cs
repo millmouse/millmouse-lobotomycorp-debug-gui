@@ -10,16 +10,15 @@ namespace MyMod
     public static class ColorUtils
     {
 
-        public const string Blue = "#0000FF";
-        public const string Red = "#FF0000";
-        public const string Green = "#00FF00";
-        public const string Gold = "#FFD700";
+        public const string Blue = "#61B5C2";
+        public const string Red = "#E18E8E";
+        public const string Green = "#7FB536";
         public const string White = "#edf4ff";
 
-        public static string RColor = "#FF4500";  
-        public static string WColor = "#4169E1";  
-        public static string BColor = "#32CD32"; 
-        public static string PColor = "#8A2BE2"; 
+        public static string RColor = "#CC2743";  
+        public static string WColor = "#EFEBBF";  
+        public static string BColor = "#A05EAA"; 
+        public static string PColor = "#40CCBE"; 
         public static string GetStatColor(RwbpType statType)
         {
             switch (statType)
@@ -33,7 +32,7 @@ namespace MyMod
                 case RwbpType.P:
                     return PColor;
                 default:
-                    return Gold;  // Default color if no match
+                    return White;  // Default color if no match
             }
         }
         public static Color HexToColor(string hex)
