@@ -37,12 +37,36 @@ public class FinishWorkSuccessfullyPatch
 
         var stats = RetrieveStats(agent);
 
+        // First, send a congratulatory message if the level has changed significantly
         CongratulateOnLevelProgress(stats);
 
-        string progressMessage = HandleProgressMessage(stats, agent, __instance);
-        Notice.instance.Send("AddSystemLog", new object[] { $"<color=#edf4ff>{progressMessage}</color>" });
+        // Send a message related to the agent and monster (excluding the progress part)
+        string agentMonsterMessage = HandleAgentMonsterMessage(stats, agent, __instance);
+        Notice.instance.Send("AddSystemLog", new object[] { $"<color={ColorUtils.White}>{agentMonsterMessage}</color>" });
 
+        // Send the second message related to the progress and agent's name
+        string progressMessage = HandleProgressMessage(stats, agent, __instance);
+        Notice.instance.Send("AddSystemLog", new object[] { $"<color={ColorUtils.White}>{progressMessage}</color>" });
     }
+
+    private static string HandleAgentMonsterMessage(StatStats stats, AgentModel agent, UseSkill __instance)
+    {
+        string agentName = agent != null ? agent.name : "Unknown Agent??";
+        string monsterName = StatUtils.GetMonsterName(__instance); // Retrieve monster name from UseSkill instance
+        string statName = stats.StatName; // Get the stat name (Strength, Intelligence, etc.)
+        RwbpType statType = stats.RwbpType; // Get the RwbpType (Strength, Intelligence, etc.)
+
+        // Get the color for the stat using ColorUtils
+        string statColor = ColorUtils.GetStatColor(statType);
+
+        // Apply color to agentName, monsterName, and statName using ColorUtils
+        string coloredAgentName = $"<color={ColorUtils.Blue}>{agentName}</color>";  // Blue for Agent
+        string coloredMonsterName = $"<color={ColorUtils.Red}>{monsterName}</color>";  // Red for Monster
+        string coloredStatName = $"<color={statColor}>{statName}</color>"; // Stat's specific color
+
+        return $"{coloredAgentName} finished Work Process with {coloredMonsterName}.";
+    }
+
 
     private static AgentModel RetrieveAgent(UseSkill __instance)
     {
@@ -82,10 +106,19 @@ public class FinishWorkSuccessfullyPatch
         string progressMessage = string.Empty;
         string agentName = agent != null ? agent.name : "Unknown Agent??";
         string monsterName = StatUtils.GetMonsterName(__instance); // Retrieve monster name from UseSkill instance
+        string statName = stats.StatName; // Get the stat name (Strength, Intelligence, etc.)
+        RwbpType statType = stats.RwbpType; // Get the RwbpType (Strength, Intelligence, etc.)
+
+        // Get the color for the stat using ColorUtils
+        string statColor = ColorUtils.GetStatColor(statType);
+
+        // Apply color to agentName, monsterName, and statName using ColorUtils
+        string coloredAgentName = $"<color={ColorUtils.Blue}>{agentName}</color>";  // Blue for Agent
+        string coloredStatName = $"<color={statColor}>{statName}</color>"; // Stat's specific color
 
         if (stats.MinExpForNextLevel == 0)
         {
-            progressMessage = $"{agentName} finished Work Process with {monsterName}. Progress to level {stats.NextLevel} reached. Maximum level reached.";
+            progressMessage = $"Stat involved: {coloredStatName}. Progress to level {stats.NextLevel} reached. Maximum level reached.";
         }
         else
         {
@@ -94,15 +127,17 @@ public class FinishWorkSuccessfullyPatch
 
             if (progressPercentage <= 0)
             {
-                progressMessage = $"{agentName} finished Work Process with {monsterName}. Progress to level {stats.NextLevel} not started.";
+                progressMessage = $"Stat involved: {coloredStatName}. Progress to level {stats.NextLevel} not started.";
             }
             else if (progressPercentage >= 100)
             {
-                progressMessage = $"{agentName} finished Work Process with {monsterName}. Progress to level {stats.NextLevel} reached. Maximum level reached.";
+                progressMessage = $"Stat involved: {coloredStatName}. Progress to level {stats.NextLevel} reached. Maximum level reached.";
             }
             else
             {
-                progressMessage = $"{agentName} finished Work Process with {monsterName}. {agentName} has reached level {stats.CurrentStatLevel} from previous level {stats.CurrentStatLevel}. Progress to next level: ({stats.PrimaryWithExpModifier} / {stats.MinExpForNextLevel}) = ({progressPercentage:F2}%) close to the next level threshold.";
+                // Apply color to the progress part (green)
+                string coloredProgress = $"<color={ColorUtils.Green}>Progress to next level: ({stats.PrimaryWithExpModifier} / {stats.MinExpForNextLevel}) = ({progressPercentage:F2}%)</color>";
+                progressMessage = $"Stat involved: {coloredStatName}. {coloredAgentName} has reached level {stats.CurrentStatLevel} from previous level {stats.CurrentStatLevel}. {coloredProgress} close to the next level threshold.";
             }
         }
 

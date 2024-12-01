@@ -38,14 +38,14 @@ namespace MyMod
         {
 
             Log.Error(message);
-            DebugTab.AddMessage(message, ColorUtils.HexToColor("#edf4ff"));
+            //DebugTab.AddMessage(message, ColorUtils.HexToColor("#edf4ff"));
         }
 
         public static void LogAndDebug(string message, Color color)
         {
 
             Log.Error(message);
-            DebugTab.AddMessage(message, color);
+            //DebugTab.AddMessage(message, color);
         }
     }
 }

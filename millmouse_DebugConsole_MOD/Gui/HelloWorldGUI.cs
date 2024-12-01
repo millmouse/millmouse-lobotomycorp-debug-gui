@@ -1,58 +1,58 @@
-﻿using SageMod;
-using UnityEngine;
-using System;
+﻿//using SageMod;
+//using UnityEngine;
+//using System;
 
-namespace MyMod
-{
-    public class HelloWorldGUI : MonoBehaviour
-    {
-        private Rect windowRect;
-        public DebugTab debugTab;
-        private bool showWindow = true;
-        private int selectedTabIndex = 1;
+//namespace MyMod
+//{
+//    public class HelloWorldGUI : MonoBehaviour
+//    {
+//        private Rect windowRect;
+//        //public DebugTab debugTab;
+//        private bool showWindow = true;
+//        private int selectedTabIndex = 1;
 
-        private void Start()
-        {
-            windowRect = new Rect(Screen.width / 2 - 300, Screen.height / 2 - 200, 600, 400);
-            DontDestroyOnLoad(this.gameObject);
-            debugTab = new DebugTab();
+//        private void Start()
+//        {
+//            windowRect = new Rect(Screen.width / 2 - 300, Screen.height / 2 - 200, 600, 400);
+//            DontDestroyOnLoad(this.gameObject);
+//            //debugTab = new DebugTab();
 
-            selectedTabIndex = 1;
-        }
+//            selectedTabIndex = 1;
+//        }
 
-        private void OnGUI()
-        {
-            Render();
-        }
+//        private void OnGUI()
+//        {
+//            Render();
+//        }
 
-        protected void Render()
-        {
-            windowRect = GUI.Window(0, windowRect, DrawWindow, "Hello World GUI");
-        }
+//        protected void Render()
+//        {
+//            windowRect = GUI.Window(0, windowRect, DrawWindow, "Hello World GUI");
+//        }
 
-        private void DrawWindow(int windowID)
-        {
-            GUILayout.BeginHorizontal();
+//        private void DrawWindow(int windowID)
+//        {
+//            GUILayout.BeginHorizontal();
 
-            if (GUILayout.Button("Debug"))
-            {
-                selectedTabIndex = 1;
-            }
+//            if (GUILayout.Button("Debug"))
+//            {
+//                selectedTabIndex = 1;
+//            }
 
-            GUILayout.EndHorizontal();
+//            GUILayout.EndHorizontal();
 
-            switch (selectedTabIndex)
-            {
-                case 1:
-                    debugTab.Render();
-                    break;
-            }
+//            switch (selectedTabIndex)
+//            {
+//                case 1:
+//                    //debugTab.Render();
+//                    break;
+//            }
 
-            GUI.DragWindow();
-        }
+//            GUI.DragWindow();
+//        }
 
-        private void OnDestroy()
-        {
-        }
-    }
-}
+//        private void OnDestroy()
+//        {
+//        }
+//    }
+//}

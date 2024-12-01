@@ -44,11 +44,11 @@ namespace MyMod.Patches
             string targetClassName = originalMethod.DeclaringType?.Name ?? "Unknown Class";
             string targetMethodName = originalMethod.Name;
 
-            if (Harmony_Patch.guiInstance != null && Harmony_Patch.guiInstance.debugTab != null)
-            {
+            //if (Harmony_Patch.guiInstance != null && Harmony_Patch.guiInstance.debugTab != null)
+            //{
 
-                Log.LogAndDebug($"Logged from class: {targetClassName}, method: {targetMethodName}");
-            }
+            //    Log.LogAndDebug($"Logged from class: {targetClassName}, method: {targetMethodName}");
+            //}
         }
     }
 }

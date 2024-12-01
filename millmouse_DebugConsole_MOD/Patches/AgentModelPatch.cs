@@ -135,16 +135,16 @@ Promotion Value: {history.promotionVal}
             string targetMethodName = originalMethod.Name;
 
             string agentName = __instance?.name ?? "Unknown Agent Name";
-            if (Harmony_Patch.guiInstance != null && Harmony_Patch.guiInstance.debugTab != null)
-            {
-                Log.LogAndDebug($"Logged from class: {targetClassName}, method: {targetMethodName}, Agent Name: {agentName}", ColorUtils.HexToColor("#f7e160"));
-                if (__instance?.history != null)
-                {
-                    string agentStatDetails = GetAgentStatDetails(__instance);
-                    Log.LogAndDebug($"Agent Details:\n{agentStatDetails}", ColorUtils.HexToColor("#f7e160"));
-                }
+            //if (Harmony_Patch.guiInstance != null && Harmony_Patch.guiInstance.debugTab != null)
+            //{
+            //    Log.LogAndDebug($"Logged from class: {targetClassName}, method: {targetMethodName}, Agent Name: {agentName}", ColorUtils.HexToColor("#f7e160"));
+            //    if (__instance?.history != null)
+            //    {
+            //        string agentStatDetails = GetAgentStatDetails(__instance);
+            //        Log.LogAndDebug($"Agent Details:\n{agentStatDetails}", ColorUtils.HexToColor("#f7e160"));
+            //    }
 
-            }
+            //}
         }
 
     }

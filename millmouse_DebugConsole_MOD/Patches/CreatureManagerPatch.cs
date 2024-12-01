@@ -46,10 +46,10 @@ namespace MyMod.Patches
             // Use the CreatureModel to fetch the name instead of CreatureManager's name
             string creatureName = model?.GetUnitName() ?? "Unknown Creature Name";
 
-            if (Harmony_Patch.guiInstance != null && Harmony_Patch.guiInstance.debugTab != null)
-            {
-                Log.LogAndDebug($"Logged from class: {targetClassName}, method: {targetMethodName}, Creature Name: {creatureName}", ColorUtils.HexToColor("#f7e160"));
-            }
+            //if (Harmony_Patch.guiInstance != null && Harmony_Patch.guiInstance.debugTab != null)
+            //{
+            //    Log.LogAndDebug($"Logged from class: {targetClassName}, method: {targetMethodName}, Creature Name: {creatureName}", ColorUtils.HexToColor("#f7e160"));
+            //}
         }
     }
 }

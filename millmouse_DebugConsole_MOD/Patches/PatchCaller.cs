@@ -16,6 +16,7 @@ namespace MyMod.Patches
             PatchAgentModel(mod);
             PatchCalculateLevelExp(mod);
             PatchFinishWorkSuccessfully(mod);
+            Log.LogAndDebug("Patched!");
         }
 
         private void PatchEXPStats(HarmonyInstance mod)
