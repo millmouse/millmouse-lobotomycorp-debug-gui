@@ -4,6 +4,7 @@ using System.Reflection;
 using System;
 using UnityEngine;
 using MyMod.Util.data;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 
 public class FinishWorkSuccessfullyPatch
 {
@@ -40,24 +41,42 @@ public class FinishWorkSuccessfullyPatch
 
         LogStatInformation(stats);
 
+        //send notice board messages
         CongratulateOnLevelProgress(stats);
+        SendProgressMessage(stats, agent, __instance);
 
         string progressMessage = HandleProgressMessage(stats);
         Log.LogAndDebug(progressMessage);
 
         LogMonsterName(__instance);
 
-        //NoticeBoardMessage();
     }
 
-//    private static void NoticeBoardMessage()
-//    {
-//        Notice.instance.Send("AddSystemLog", new object[]
-//{
-//    "text"
-//});
 
-//    }
+    private static void SendProgressMessage(StatStats stats, AgentModel agent, UseSkill __instance)
+    {
+        float progressToNextLevel = (float)stats.PrimaryWithExpModifier / stats.MinExpForNextLevel;
+        float progressPercentage = progressToNextLevel * 100;
+
+        // Only send the progress message if the agent is making significant progress
+        if (progressPercentage > 0 && progressPercentage < 100)
+        {
+            // Create the progress message using the provided stats and agent
+            string progressMessage = CreateProgressMessage(stats, agent, __instance);
+
+            // Send the progress message to the notice board with the appropriate color
+            Notice.instance.Send("AddSystemLog", new object[] { $"<color={ColorUtils.MymessageColor}>{progressMessage}</color>" });
+        }
+        else if (progressPercentage >= 100)
+        {
+            string statColor = ColorUtils.GetStatColor(stats.RwbpType);
+            string coloredStatName = $"<color={statColor}>{stats.StatName}</color>";
+
+            string completedMessage = $"{agent.name} has reached the maximum level for {coloredStatName}.";
+            Notice.instance.Send("AddSystemLog", new object[] { $"<color={ColorUtils.MymessageColor}>{completedMessage}</color>" });
+        }
+    }
+
 
     private static void LogMethodName()
     {
@@ -99,7 +118,6 @@ public class FinishWorkSuccessfullyPatch
     {
         int reachedLevel = AgentModel.CalculateStatLevel(stats.PrimaryWithExpModifier);
 
-        // Only send the congratulatory message if there's significant progress
         if (stats.NextLevel >= stats.CurrentStatLevel + 2)
         {
             string message = CreateLevelUpMessage(stats, reachedLevel);
@@ -144,15 +162,6 @@ public class FinishWorkSuccessfullyPatch
         Log.LogAndDebug($"Monster name: {monsterName}");
     }
 
-//    private static void PrintMessage()
-//    {
-//        Notice.instance.Send("AddSystemLog", new object[]
-//{
-//    "<color=#edf4ff>" + "Aaaa" + "</color>"
-//});
-
-//    }
-
     private static string CreateAgentMonsterMessage(StatStats stats, AgentModel agent, UseSkill __instance)
     {
         return $"{FormatWithColor(agent.name, ColorUtils.Blue)} finished Work Process with {FormatWithColor(StatUtils.GetMonsterName(__instance), ColorUtils.Red)}.";
@@ -160,22 +169,27 @@ public class FinishWorkSuccessfullyPatch
 
     private static string CreateProgressMessage(StatStats stats, AgentModel agent, UseSkill __instance)
     {
+        // Get the names and their corresponding colors
         string agentName = agent != null ? agent.name : "Unknown Agent??";
+        string monsterName = StatUtils.GetMonsterName(__instance);
         string statName = stats.StatName;
+
+        // Color the agent and monster names
+        string coloredAgentName = $"<color={ColorUtils.Blue}>{agentName}</color>";
+        string coloredMonsterName = $"<color={ColorUtils.Red}>{monsterName}</color>";
+
+        // Get the color for the stat name
         string statColor = ColorUtils.GetStatColor(stats.RwbpType);
         string coloredStatName = $"<color={statColor}>{statName}</color>";
-        string coloredAgentName = $"<color={ColorUtils.Blue}>{agentName}</color>";
 
         string progressMessage = string.Empty;
 
         if (stats.MinExpForNextLevel == 0)
         {
-            progressMessage = $"{coloredAgentName} reached maximum {coloredStatName} level";
+            progressMessage = $"{coloredAgentName} reached maximum {coloredStatName} level.";
         }
         else
         {
-            progressMessage = GetProgressMessagePrefix(stats, coloredStatName);
-
             float progressToNextLevel = (float)stats.PrimaryWithExpModifier / stats.MinExpForNextLevel;
             float progressPercentage = progressToNextLevel * 100;
 
@@ -189,22 +203,19 @@ public class FinishWorkSuccessfullyPatch
             }
             else
             {
-                string coloredProgress = $"<color={ColorUtils.Green}>Progress to next {coloredStatName} level: ({stats.PrimaryWithExpModifier} / {stats.MinExpForNextLevel}) = ({progressPercentage:F2}%)</color>";
-                progressMessage += $"{coloredAgentName} has reached {coloredStatName} level {stats.CurrentStatLevel}. {coloredProgress} close to the next level threshold.";
+                string coloredProgress = $"\n\n<color={ColorUtils.Green}>({stats.PrimaryWithExpModifier} / {stats.MinExpForNextLevel}) = ({progressPercentage:F2}%)</color>";
+                progressMessage += $"{coloredAgentName} finished work on {monsterName}. {coloredProgress} to next {coloredStatName} level. Next Level: ({stats.NextLevel}).";
             }
         }
 
-        return progressMessage;
+        // Return the complete message with the final color (MymessageColor)
+        return $"<color={ColorUtils.MymessageColor}>{progressMessage}</color>";
     }
+
 
     private static string FormatWithColor(string text, string color)
     {
         return $"<color={color}>{text}</color>";
-    }
-
-    private static string GetProgressMessagePrefix(StatStats stats, string coloredStatName)
-    {
-        return $"Progress to {coloredStatName} level {stats.NextLevel} ";
     }
 
     private static string CreateLevelUpMessage(StatStats stats, int reachedLevel)

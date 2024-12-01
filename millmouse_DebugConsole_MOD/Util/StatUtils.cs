@@ -46,13 +46,13 @@ namespace MyMod
         public static string GetStatName(RwbpType rwbpType)
         {
             if (rwbpType == RwbpType.R)
-                return "Health (HP)";
+                return "Fortitude (R)";
             else if (rwbpType == RwbpType.W)
-                return "Mental";
+                return "Prudence (W)";
             else if (rwbpType == RwbpType.B)
-                return "Work";
+                return "Temperance (B)";
             else if (rwbpType == RwbpType.P)
-                return "Battle";
+                return "Justice (P)";
             else
                 return "Unknown";
         }
