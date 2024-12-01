@@ -32,26 +32,16 @@ public class FinishWorkSuccessfullyPatch
 
     public static void Postfix_LoggerPatch(UseSkill __instance)
     {
-        LogMethodName();
-
         var agent = RetrieveAgent(__instance);
         if (agent == null) return;
 
         var stats = RetrieveStats(agent);
 
-        LogStatInformation(stats);
-
         CongratulateOnLevelProgress(stats);
 
-        string progressMessage = HandleProgressMessage(stats);
-        Notice.instance.Send("AddSystemLog", new object[] { "<color=#edf4ff>" + progressMessage + "</color>" });
+        string progressMessage = HandleProgressMessage(stats, agent, __instance);
+        Notice.instance.Send("AddSystemLog", new object[] { $"<color=#edf4ff>{progressMessage}</color>" });
 
-        LogMonsterName(__instance);
-    }
-
-    private static void LogMethodName()
-    {
-        Notice.instance.Send("AddSystemLog", new object[] { "<color=#edf4ff>Target Method: " + targetMethodName + "</color>" });
     }
 
     private static AgentModel RetrieveAgent(UseSkill __instance)
@@ -74,13 +64,7 @@ public class FinishWorkSuccessfullyPatch
         int minExpForNextLevel = StatUtils.GetMinStatForLevel(nextLevel);
 
         return new StatStats(rwbpType, statName, statValue, currentStatLevel, primaryValue, primaryWithExpModifier,
-                                 nextLevel, minExpForNextLevel, agentName);
-    }
-
-    private static void LogStatInformation(StatStats stats)
-    {
-        Notice.instance.Send("AddSystemLog", new object[] { $"<color=#edf4ff>{stats.AgentName}: Next Level for ({stats.StatName}): {stats.NextLevel}</color>" });
-        Notice.instance.Send("AddSystemLog", new object[] { $"<color=#edf4ff>{stats.AgentName}: Min Exp For next level in stat ({stats.StatName}): {stats.MinExpForNextLevel}</color>" });
+                             nextLevel, minExpForNextLevel, agentName);
     }
 
     private static void CongratulateOnLevelProgress(StatStats stats)
@@ -88,17 +72,20 @@ public class FinishWorkSuccessfullyPatch
         int reachedLevel = AgentModel.CalculateStatLevel(stats.PrimaryWithExpModifier);
         if (stats.NextLevel >= stats.CurrentStatLevel + 2)
         {
-            Notice.instance.Send("AddSystemLog", new object[] { "<color=#edf4ff>Congratulations! " + stats.StatName + " has reached level " + reachedLevel + ", from previous level " + stats.CurrentStatLevel + ".</color>" });
+            string message = $"{stats.AgentName} has reached level {reachedLevel} from previous level {stats.CurrentStatLevel}.";
+            Notice.instance.Send("AddSystemLog", new object[] { $"<color=#edf4ff>{message}</color>" });
         }
     }
 
-    private static string HandleProgressMessage(StatStats stats)
+    private static string HandleProgressMessage(StatStats stats, AgentModel agent, UseSkill __instance)
     {
-        string progressMessage;
+        string progressMessage = string.Empty;
+        string agentName = agent != null ? agent.name : "Unknown Agent??";
+        string monsterName = StatUtils.GetMonsterName(__instance); // Retrieve monster name from UseSkill instance
 
         if (stats.MinExpForNextLevel == 0)
         {
-            progressMessage = $"Progress to level {stats.NextLevel} reached. Maximum level reached.";
+            progressMessage = $"{agentName} finished Work Process with {monsterName}. Progress to level {stats.NextLevel} reached. Maximum level reached.";
         }
         else
         {
@@ -107,25 +94,19 @@ public class FinishWorkSuccessfullyPatch
 
             if (progressPercentage <= 0)
             {
-                progressMessage = $"Progress to level {stats.NextLevel} not started.";
+                progressMessage = $"{agentName} finished Work Process with {monsterName}. Progress to level {stats.NextLevel} not started.";
             }
             else if (progressPercentage >= 100)
             {
-                progressMessage = $"Progress to level {stats.NextLevel} reached. Maximum level reached.";
+                progressMessage = $"{agentName} finished Work Process with {monsterName}. Progress to level {stats.NextLevel} reached. Maximum level reached.";
             }
             else
             {
-                progressMessage = $"{stats.StatName} progress to next level: ({stats.PrimaryWithExpModifier} / {stats.MinExpForNextLevel}) = ({progressPercentage:F2}%) close to the next level threshold.";
+                progressMessage = $"{agentName} finished Work Process with {monsterName}. {agentName} has reached level {stats.CurrentStatLevel} from previous level {stats.CurrentStatLevel}. Progress to next level: ({stats.PrimaryWithExpModifier} / {stats.MinExpForNextLevel}) = ({progressPercentage:F2}%) close to the next level threshold.";
             }
         }
 
         return progressMessage;
-    }
-
-    private static void LogMonsterName(UseSkill __instance)
-    {
-        string monsterName = StatUtils.GetMonsterName(__instance);
-        Notice.instance.Send("AddSystemLog", new object[] { "<color=#edf4ff>Monster name: " + monsterName + "</color>" });
     }
 
 }
