@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
-
 using Harmony;
 using MyMod;
 using UnityEngine;
@@ -39,67 +37,6 @@ namespace MyMod.Patches
             }
         }
 
-        public static string GetAgentHistoryDetails(AgentHistory agentHistory)
-        {
-            if (agentHistory == null)
-            {
-                return "AgentHistory is null.";
-            }
-
-            var details = new System.Text.StringBuilder();
-            details.AppendLine("===== Agent History Details =====");
-            details.AppendLine("\nOne Day History:");
-            details.Append(GetHistoryDetails(agentHistory.Oneday));
-            details.AppendLine("\nTotal History:");
-            details.Append(GetHistoryDetails(agentHistory.Total));
-            details.AppendLine("=================================");
-            return details.ToString();
-        }
-
-        private static string GetHistoryDetails(AgentHistory.History history)
-        {
-            if (history == null)
-            {
-                return "History is null.";
-            }
-
-            return $@"
-Work Cube Counts:
-{GetWorkCubeCountsString(history.workCubeCounts)}
-
-Promotion Value: {history.promotionVal}
-";
-        }
-
-
-        private static string GetWorkCubeCountsString(Dictionary<RwbpType, int> workCubeCounts)
-        {
-            if (workCubeCounts == null || workCubeCounts.Count == 0)
-            {
-                return "None";
-            }
-
-            var order = new List<RwbpType> { RwbpType.R, RwbpType.W, RwbpType.B, RwbpType.P };
-
-            var result = new System.Text.StringBuilder();
-            bool first = true;
-
-            foreach (var key in order)
-            {
-                if (workCubeCounts.ContainsKey(key))
-                {
-                    if (!first)
-                    {
-                        result.AppendLine();
-                    }
-                    result.Append($"{key}: {workCubeCounts[key]}");
-                    first = false;
-                }
-            }
-
-            return result.Length > 0 ? result.ToString() : "None";
-        }
-
         private static string GetAgentStatDetails(AgentModel agent)
         {
             if (agent == null)
@@ -121,28 +58,15 @@ Promotion Value: {history.promotionVal}
             sb.AppendLine($"- Mental: {agent.primaryStat?.mental ?? 0}");
             sb.AppendLine($"- HP: {agent.primaryStat?.hp ?? 0}");
 
-
-
             return sb.ToString();
         }
 
-
         public static void Postfix_LoggerPatch(AgentModel __instance)
         {
+            if (__instance == null) return;
 
-            var originalMethod = new StackTrace().GetFrame(1).GetMethod();
-            string targetClassName = originalMethod.DeclaringType?.Name ?? "Unknown Class";
-            string targetMethodName = originalMethod.Name;
-
-            string agentName = __instance?.name ?? "Unknown Agent Name";
-            Log.LogAndDebug($"Logged from class: {targetClassName}, method: {targetMethodName}, Agent Name: {agentName}", ColorUtils.HexToColor("#f7e160"));
-            if (__instance?.history != null)
-            {
-                string agentStatDetails = GetAgentStatDetails(__instance);
-                Log.LogAndDebug($"Agent Details:\n{agentStatDetails}", ColorUtils.HexToColor("#f7e160"));
-            }
-
+            var agentStatDetails = GetAgentStatDetails(__instance);
+            Log.LogAndDebug($"Agent Details:\n{agentStatDetails}", ColorUtils.HexToColor("#f7e160"));
         }
-
     }
 }

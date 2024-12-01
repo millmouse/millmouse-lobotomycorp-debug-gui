@@ -39,9 +39,7 @@ public class FinishWorkSuccessfullyPatch
 
         var stats = RetrieveStats(agent);
 
-        LogStatInformation(stats);
-
-        //send notice board messages
+        LogStatInformation(stats); 
         CongratulateOnLevelProgress(stats);
         SendProgressMessage(stats, agent, __instance);
 
@@ -56,15 +54,10 @@ public class FinishWorkSuccessfullyPatch
     private static void SendProgressMessage(StatStats stats, AgentModel agent, UseSkill __instance)
     {
         float progressToNextLevel = (float)stats.PrimaryWithExpModifier / stats.MinExpForNextLevel;
-        float progressPercentage = progressToNextLevel * 100;
-
-        // Only send the progress message if the agent is making significant progress
+        float progressPercentage = progressToNextLevel * 100; 
         if (progressPercentage > 0 && progressPercentage < 100)
-        {
-            // Create the progress message using the provided stats and agent
-            string progressMessage = CreateProgressMessage(stats, agent, __instance);
-
-            // Send the progress message to the notice board with the appropriate color
+        { 
+            string progressMessage = CreateProgressMessage(stats, agent, __instance); 
             Notice.instance.Send("AddSystemLog", new object[] { $"<color={ColorUtils.MymessageColor}>{progressMessage}</color>" });
         }
         else if (progressPercentage >= 100)
@@ -168,17 +161,12 @@ public class FinishWorkSuccessfullyPatch
     }
 
     private static string CreateProgressMessage(StatStats stats, AgentModel agent, UseSkill __instance)
-    {
-        // Get the names and their corresponding colors
+    { 
         string agentName = agent != null ? agent.name : "Unknown Agent??";
         string monsterName = StatUtils.GetMonsterName(__instance);
-        string statName = stats.StatName;
-
-        // Color the agent and monster names
+        string statName = stats.StatName; 
         string coloredAgentName = $"<color={ColorUtils.Blue}>{agentName}</color>";
-        string coloredMonsterName = $"<color={ColorUtils.Red}>{monsterName}</color>";
-
-        // Get the color for the stat name
+        string coloredMonsterName = $"<color={ColorUtils.Red}>{monsterName}</color>"; 
         string statColor = ColorUtils.GetStatColor(stats.RwbpType);
         string coloredStatName = $"<color={statColor}>{statName}</color>";
 
@@ -203,12 +191,10 @@ public class FinishWorkSuccessfullyPatch
             }
             else
             {
-                string coloredProgress = $"\n\n<color={ColorUtils.Green}>({stats.PrimaryWithExpModifier} / {stats.MinExpForNextLevel}) = ({progressPercentage:F2}%)</color>";
+                string coloredProgress = $"\n<color={ColorUtils.Green}>({stats.PrimaryWithExpModifier} / {stats.MinExpForNextLevel}) = ({progressPercentage:F2}%)</color>";
                 progressMessage += $"{coloredAgentName} finished work on {monsterName}. {coloredProgress} to next {coloredStatName} level. Next Level: ({stats.NextLevel}).";
             }
-        }
-
-        // Return the complete message with the final color (MymessageColor)
+        } 
         return $"<color={ColorUtils.MymessageColor}>{progressMessage}</color>";
     }
 
@@ -219,18 +205,14 @@ public class FinishWorkSuccessfullyPatch
     }
 
     private static string CreateLevelUpMessage(StatStats stats, int reachedLevel)
-    {
-        // Get the appropriate color for the stat
-        string statColor = ColorUtils.GetStatColor(stats.RwbpType);
-
-        // Construct the level-up message with the stat name colored
+    { 
+        string statColor = ColorUtils.GetStatColor(stats.RwbpType); 
         return $"~-~ Congratulations! ~-~ {stats.AgentName} has reached level {reachedLevel} in <color={statColor}>{stats.StatName}</color>.";
     }
 
 
     private static string CreateProgressMessageWithoutLevelPhrase(StatStats stats, int reachedLevel)
-    {
-        // Provide a formatted message that doesn't repeat the phrase "has reached level"
+    { 
         return $"{stats.AgentName} is now at level {reachedLevel} in {stats.StatName}.";
     }
 }
