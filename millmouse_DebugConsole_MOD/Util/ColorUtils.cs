@@ -16,22 +16,22 @@ namespace MyMod
         public const string Gold = "#FFD700";
         public const string White = "#edf4ff";
 
-        public static string StrengthColor = "#FF4500";  // OrangeRed for Strength
-        public static string IntelligenceColor = "#4169E1";  // RoyalBlue for Intelligence
-        public static string DexterityColor = "#32CD32";  // LimeGreen for Dexterity
-        public static string VitalityColor = "#8A2BE2";  // BlueViolet for Vitality
+        public static string RColor = "#FF4500";  
+        public static string WColor = "#4169E1";  
+        public static string BColor = "#32CD32"; 
+        public static string PColor = "#8A2BE2"; 
         public static string GetStatColor(RwbpType statType)
         {
             switch (statType)
             {
                 case RwbpType.R:
-                    return StrengthColor;
+                    return RColor;
                 case RwbpType.W:
-                    return IntelligenceColor;
+                    return WColor;
                 case RwbpType.B:
-                    return DexterityColor;
+                    return BColor;
                 case RwbpType.P:
-                    return VitalityColor;
+                    return PColor;
                 default:
                     return Gold;  // Default color if no match
             }
