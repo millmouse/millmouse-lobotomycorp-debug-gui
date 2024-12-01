@@ -31,11 +31,7 @@ namespace MyMod.Patches
         }
 
         public static void Postfix_StartGame()
-        {
-            //if (Harmony_Patch.guiInstance != null && Harmony_Patch.guiInstance.debugTab != null)
-            //{
-            //    DebugTab.AddMessage("Game has started!");
-            //}
+        {    
         }
     }
 }

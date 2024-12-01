@@ -12,8 +12,7 @@ using MyMod.Patches;
 namespace MyMod
 {
     public class Harmony_Patch : MonoBehaviour
-    {
-        //public static HelloWorldGUI guiInstance;
+    { 
 
         public Harmony_Patch()
         {
@@ -24,27 +23,10 @@ namespace MyMod
                 GameObject updatePatchObject = new GameObject("UpdatePatchObject");
 
                 PatchCaller patchCaller = new PatchCaller();
-                patchCaller.CallPatches(mod);
-
-                //GameObject guiObject = new GameObject("HelloWorldGUI");
-                //guiInstance = guiObject.AddComponent<HelloWorldGUI>();
-
-                //guiObject.AddComponent<MonoBehaviourWithCoroutine>().StartCoroutine(WaitForDebugTab(guiInstance));
+                patchCaller.CallPatches(mod);   
 
             });
-        }
-
-
-        //private IEnumerator WaitForDebugTab(HelloWorldGUI guiInstance)
-        //{
-
-        //    while (guiInstance?.debugTab == null)
-        //    {
-        //        yield return null;
-        //    }
-        //    Log.LogAndDebug("HelloWorldGUI initialized with DebugTab ready.", ColorUtils.HexToColor("#f57e42"));
-
-        //}
+        }        
 
         private static void Invoke(Action action)
         {

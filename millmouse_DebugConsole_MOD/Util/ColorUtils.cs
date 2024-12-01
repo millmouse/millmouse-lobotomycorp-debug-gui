@@ -14,6 +14,7 @@ namespace MyMod
         public const string Red = "#E18E8E";
         public const string Green = "#7FB536";
         public const string White = "#edf4ff";
+        public const string MymessageColor = "#ffbd7a";
 
         public static string RColor = "#CC2743";  
         public static string WColor = "#EFEBBF";  
@@ -32,7 +33,7 @@ namespace MyMod
                 case RwbpType.P:
                     return PColor;
                 default:
-                    return White;  // Default color if no match
+                    return White; 
             }
         }
         public static Color HexToColor(string hex)

@@ -37,15 +37,13 @@ namespace MyMod
         public static void LogAndDebug(string message)
         {
 
-            Log.Error(message);
-            //DebugTab.AddMessage(message, ColorUtils.HexToColor("#edf4ff"));
+            Log.Error(message); 
         }
 
         public static void LogAndDebug(string message, Color color)
         {
 
-            Log.Error(message);
-            //DebugTab.AddMessage(message, color);
+            Log.Error(message); 
         }
     }
 }
