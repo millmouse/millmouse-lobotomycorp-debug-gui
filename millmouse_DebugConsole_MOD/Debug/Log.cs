@@ -39,10 +39,6 @@ namespace MyMod
 
             Log.Error(message);
             DebugTab.AddMessage(message, ColorUtils.HexToColor("#edf4ff"));
-            Notice.instance.Send("AddSystemLog", new object[]
-{
-    "<color=#ff26ed>" + message + "</color>"
-});
         }
 
         public static void LogAndDebug(string message, Color color)
@@ -50,12 +46,6 @@ namespace MyMod
 
             Log.Error(message);
             DebugTab.AddMessage(message, color);
-            Notice.instance.Send("AddSystemLog", new object[]
-{
-    "<color=#ff26ed>" + message + "</color>"
-});
-
-
         }
     }
 }

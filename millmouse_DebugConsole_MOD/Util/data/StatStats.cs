@@ -15,8 +15,10 @@ namespace MyMod.Util.data
         public int PrimaryWithExpModifier { get; set; }
         public int NextLevel { get; set; }
         public int MinExpForNextLevel { get; set; }
+        public string AgentName { get; set; } 
 
-        public StatStats(RwbpType rwbpType, string statName, float statValue, int currentStatLevel, int primaryValue, int primaryWithExpModifier, int nextLevel, int minExpForNextLevel)
+        public StatStats(RwbpType rwbpType, string statName, float statValue, int currentStatLevel, int primaryValue,
+                         int primaryWithExpModifier, int nextLevel, int minExpForNextLevel, string agentName)
         {
             RwbpType = rwbpType;
             StatName = statName;
@@ -26,6 +28,8 @@ namespace MyMod.Util.data
             PrimaryWithExpModifier = primaryWithExpModifier;
             NextLevel = nextLevel;
             MinExpForNextLevel = minExpForNextLevel;
+            AgentName = agentName;  
         }
     }
+
 }

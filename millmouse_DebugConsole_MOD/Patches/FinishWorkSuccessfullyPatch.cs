@@ -23,12 +23,13 @@ public class FinishWorkSuccessfullyPatch
 
         if (originalMethod == null)
         {
-            Log.Error($"Failed to find method: {targetMethodName} in class {targetType.Name}");
+            Notice.instance.Send("AddSystemLog", new object[] { "<color=#edf4ff>Failed to find method: " + targetMethodName + " in class " + targetType.Name + "</color>" });
             return;
         }
 
         mod.Patch(originalMethod, null, new HarmonyMethod(myPatchMethod), null);
     }
+
     public static void Postfix_LoggerPatch(UseSkill __instance)
     {
         LogMethodName();
@@ -43,14 +44,14 @@ public class FinishWorkSuccessfullyPatch
         CongratulateOnLevelProgress(stats);
 
         string progressMessage = HandleProgressMessage(stats);
-        Log.LogAndDebug(progressMessage);
+        Notice.instance.Send("AddSystemLog", new object[] { "<color=#edf4ff>" + progressMessage + "</color>" });
 
         LogMonsterName(__instance);
     }
 
     private static void LogMethodName()
     {
-        Log.LogAndDebug($"Target Method: {targetMethodName}");
+        Notice.instance.Send("AddSystemLog", new object[] { "<color=#edf4ff>Target Method: " + targetMethodName + "</color>" });
     }
 
     private static AgentModel RetrieveAgent(UseSkill __instance)
@@ -67,20 +68,19 @@ public class FinishWorkSuccessfullyPatch
         int currentStatLevel = StatUtils.GetStatLevel(agent, rwbpType);
         int primaryValue = StatUtils.GetStatPrimaryValue(agent, rwbpType);
         int primaryWithExpModifier = Convert.ToInt32(Math.Round(statValue)) + primaryValue;
+        string agentName = agent != null ? agent.name : "Unknown Agent??";
 
         int nextLevel = StatUtils.GetNextLevel(primaryWithExpModifier);
         int minExpForNextLevel = StatUtils.GetMinStatForLevel(nextLevel);
 
-        return new StatStats(rwbpType, statName, statValue, currentStatLevel, primaryValue, primaryWithExpModifier, nextLevel, minExpForNextLevel);
+        return new StatStats(rwbpType, statName, statValue, currentStatLevel, primaryValue, primaryWithExpModifier,
+                                 nextLevel, minExpForNextLevel, agentName);
     }
 
     private static void LogStatInformation(StatStats stats)
     {
-        Log.LogAndDebug($"Current Stat Value ({stats.StatName}): {stats.StatValue}");
-        Log.LogAndDebug($"Current Stat Level ({stats.StatName}): {stats.CurrentStatLevel}");
-        Log.LogAndDebug($"Current Primary+Exp ({stats.StatName}): {stats.PrimaryWithExpModifier}");
-        Log.LogAndDebug($"Next Level for ({stats.StatName}): {stats.NextLevel}");
-        Log.LogAndDebug($"Min Exp For next level in stat ({stats.StatName}): {stats.MinExpForNextLevel}");
+        Notice.instance.Send("AddSystemLog", new object[] { $"<color=#edf4ff>{stats.AgentName}: Next Level for ({stats.StatName}): {stats.NextLevel}</color>" });
+        Notice.instance.Send("AddSystemLog", new object[] { $"<color=#edf4ff>{stats.AgentName}: Min Exp For next level in stat ({stats.StatName}): {stats.MinExpForNextLevel}</color>" });
     }
 
     private static void CongratulateOnLevelProgress(StatStats stats)
@@ -88,7 +88,7 @@ public class FinishWorkSuccessfullyPatch
         int reachedLevel = AgentModel.CalculateStatLevel(stats.PrimaryWithExpModifier);
         if (stats.NextLevel >= stats.CurrentStatLevel + 2)
         {
-            Log.LogAndDebug($"Congratulations! {stats.StatName} has reached level {reachedLevel}, from previous level {stats.CurrentStatLevel}.");
+            Notice.instance.Send("AddSystemLog", new object[] { "<color=#edf4ff>Congratulations! " + stats.StatName + " has reached level " + reachedLevel + ", from previous level " + stats.CurrentStatLevel + ".</color>" });
         }
     }
 
@@ -96,7 +96,8 @@ public class FinishWorkSuccessfullyPatch
     {
         string progressMessage;
 
-        if (stats.MinExpForNextLevel == 0)        {
+        if (stats.MinExpForNextLevel == 0)
+        {
             progressMessage = $"Progress to level {stats.NextLevel} reached. Maximum level reached.";
         }
         else
@@ -124,7 +125,7 @@ public class FinishWorkSuccessfullyPatch
     private static void LogMonsterName(UseSkill __instance)
     {
         string monsterName = StatUtils.GetMonsterName(__instance);
-        Log.LogAndDebug($"Monster name: {monsterName}");
+        Notice.instance.Send("AddSystemLog", new object[] { "<color=#edf4ff>Monster name: " + monsterName + "</color>" });
     }
 
 }
