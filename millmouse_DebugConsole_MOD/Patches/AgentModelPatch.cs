@@ -89,7 +89,7 @@ namespace MyMod.Patches
             if (__instance == null) return;
 
             var statProgressDetails = GetStatProgressDetails(__instance);
-            Log.LogAndDebug($"```\nAgent {__instance.name}'s Stat Progress:\n{statProgressDetails}");
+            Log.LogAndDebug($"\n```\nAgent {__instance.name}'s Stat Progress:\n{statProgressDetails}");
         }
     }
 }
