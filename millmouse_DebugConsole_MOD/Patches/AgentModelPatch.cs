@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 
 using Harmony;
@@ -40,16 +42,31 @@ namespace MyMod.Patches
 
         public static void Postfix_LoggerPatch(AgentModel __instance)
         {
-
-            var originalMethod = new StackTrace().GetFrame(1).GetMethod();
-            string targetClassName = originalMethod.DeclaringType?.Name ?? "Unknown Class";
-            string targetMethodName = originalMethod.Name;
+            // Get the original method's information
+            var originalMethod = new StackTrace().GetFrame(1)?.GetMethod();
+            string targetClassName = originalMethod?.DeclaringType?.Name ?? "Unknown Class";
+            string targetMethodName = originalMethod?.Name ?? "Unknown Method";
 
             string agentName = __instance?.name ?? "Unknown Agent Name";
-            if (Harmony_Patch.guiInstance != null && Harmony_Patch.guiInstance.debugTab != null)
+
+            // Get all gifts safely
+            List<EGOgiftModel> gifts = __instance?.GetAllGifts();
+
+            // Get the first gift and its meta-info safely
+            string egogiftName = "No Gift Available";
+            if (gifts != null && gifts.Count > 0)
+            {
+                var gift = gifts.FirstOrDefault();
+                var metaInfoOfGift = gift?.metaInfo;
+                egogiftName = metaInfoOfGift?.Name ?? "Unknown Gift Name";
+            }
+
+            if (Harmony_Patch.guiInstance?.debugTab != null)
             {
                 Log.LogAndDebug($"Logged from class: {targetClassName}, method: {targetMethodName}, Agent Name: {agentName}", ColorUtils.HexToColor("#f7e160"));
+                Log.LogAndDebug($"{agentName}'s first or default ego: {egogiftName}", ColorUtils.HexToColor("#f7e160"));
             }
         }
     }
+
 }
