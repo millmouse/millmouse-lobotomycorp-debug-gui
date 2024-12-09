@@ -90,9 +90,15 @@ namespace MyMod.Patches
                 //string agentName = agent?.name ?? "Unknown Agent";
                 //int giftCount = agent?.GetAllGifts()?.Count ?? 0;
                 //agentGiftCounts.Add(new KeyValuePair<string, int>(agentName, giftCount));
-
                 //agent stats grabbed like this:
-                //agent.get
+                
+                int cubeSpeed = agent.primaryStat.cubeSpeed;
+                int workProb = agent.primaryStat.workProb;
+                int attackSpeed = agent.primaryStat.attackSpeed;
+                int movementSpeed = agent.primaryStat.movementSpeed;
+                int maxHP = agent.primaryStat.maxHP;
+                int maxMental = agent.primaryStat.maxMental;
+                int sum = cubeSpeed + workProb + attackSpeed + movementSpeed + maxHP + maxMental;
 
 
             }
