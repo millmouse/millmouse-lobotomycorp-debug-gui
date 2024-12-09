@@ -12,7 +12,7 @@ namespace MyMod.Patches
         private static readonly Type targetType = typeof(AgentManager);
         private const string TargetMethodName = "GetAgentList";
         private static DateTime? lastLogTime = null;
-        private static readonly TimeSpan logCooldown = TimeSpan.FromSeconds(20);
+        private static readonly TimeSpan logCooldown = TimeSpan.FromSeconds(30);
 
 
         public AgentManagerPatch(HarmonyInstance mod)
