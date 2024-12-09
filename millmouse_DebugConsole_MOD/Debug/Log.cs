@@ -8,6 +8,8 @@ namespace MyMod
     {
         private static readonly string logFilePath = Application.dataPath + "/BaseMods/Error_Sage.txt";
         private static bool logFileCreated = false;
+        private static DateTime? lastLogTime = null; // Track the last log time
+        private static readonly TimeSpan logCooldown = TimeSpan.FromSeconds(20); // Cooldown duration
 
         public static void Error(Exception e)
         {
@@ -36,18 +38,34 @@ namespace MyMod
 
         public static void LogAndDebug(string message)
         {
+            if (!ShouldLogMessage())
+                return;
 
             Log.Error(message);
-
             DebugTab.AddMessage(message, ColorUtils.HexToColor("#edf4ff"));
         }
 
         public static void LogAndDebug(string message, Color color)
         {
+            if (!ShouldLogMessage())
+                return;
 
             Log.Error(message);
-
             DebugTab.AddMessage(message, color);
+        }
+
+        private static bool ShouldLogMessage()
+        {
+            DateTime now = DateTime.Now;
+
+            if (lastLogTime.HasValue && (now - lastLogTime.Value) < logCooldown)
+            {
+                // Skip logging if within cooldown period
+                return false;
+            }
+
+            lastLogTime = now; // Update the last log time
+            return true;
         }
     }
 }

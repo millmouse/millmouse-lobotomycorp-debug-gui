@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-
+using System.Text;
 using Harmony;
 using MyMod;
 
@@ -38,18 +38,42 @@ namespace MyMod.Patches
         {
             if (Harmony_Patch.guiInstance?.debugTab != null)
             {
-                Log.LogAndDebug($"AgentManagerPatch: GetAgentList returned {__result?.Count ?? 0} agents:");
-
-                if (__result != null)
+                // Check if the result list is null or empty
+                if (__result == null || __result.Count == 0)
                 {
-                    foreach (var agent in __result)
-                    {
-                        string agentName = agent?.name ?? "Unknown Agent";
-                        Log.LogAndDebug($"- Agent Name: {agentName}");
-                        //Log.LogAndDebug($"- Agent Name: {agentName}");
-                    }
+                    Log.LogAndDebug("AgentManagerPatch: No agents found in GetAgentList.");
+                    return;
                 }
+
+                // Initialize StringBuilder to accumulate the message
+                StringBuilder logMessage = new StringBuilder();
+                logMessage.AppendLine("AgentManagerPatch: EGO gift counts ordered by most to least:");
+
+                // Prepare a list to store agent names and their EGO gift counts
+                var agentGiftCounts = new List<KeyValuePair<string, int>>();
+
+                // Iterate through the agent list and collect their EGO gift counts
+                foreach (var agent in __result)
+                {
+                    string agentName = agent?.name ?? "Unknown Agent";
+                    int giftCount = agent?.GetAllGifts()?.Count ?? 0; // Safely get the gift count
+                    agentGiftCounts.Add(new KeyValuePair<string, int>(agentName, giftCount));
+                }
+
+                // Sort the list by gift count in descending order
+                agentGiftCounts.Sort((x, y) => y.Value.CompareTo(x.Value));
+
+                // Append the sorted results to the logMessage
+                foreach (var agentGiftCount in agentGiftCounts)
+                {
+                    logMessage.AppendLine($"- {agentGiftCount.Key}: {agentGiftCount.Value} EGO gifts");
+                }
+
+                // Log the accumulated message
+                Log.LogAndDebug(logMessage.ToString());
             }
         }
+
+
     }
 }
