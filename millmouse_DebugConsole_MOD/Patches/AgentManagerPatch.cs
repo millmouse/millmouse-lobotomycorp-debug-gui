@@ -50,6 +50,8 @@ namespace MyMod.Patches
                 return;
 
             string logMessage = GetEgoGiftListLog(__result);
+            logMessage += "\n";
+            logMessage += GetBestToWorstStatsListLog(__result);
             Log.LogAndDebug(logMessage);
         }
 
@@ -82,36 +84,86 @@ namespace MyMod.Patches
             StringBuilder logMessage = new StringBuilder();
             logMessage.AppendLine("AgentManagerPatch: Agent stats ordered by most to least:");
 
-
-            var agentGiftCounts = new List<KeyValuePair<string, int>>();
+            // List to store agents and their stats
+            var agentStatsList = new List<KeyValuePair<string, KeyValuePair<int, KeyValuePair<string, int>>>>();
 
             foreach (var agent in agents)
             {
-                //string agentName = agent?.name ?? "Unknown Agent";
-                //int giftCount = agent?.GetAllGifts()?.Count ?? 0;
-                //agentGiftCounts.Add(new KeyValuePair<string, int>(agentName, giftCount));
-                //agent stats grabbed like this:
-                
+                if (agent == null || agent.primaryStat == null)
+                {
+                    continue;
+                }
+
+                string agentName = agent.name ?? "Unknown Agent";
+
+                // Retrieve stats
                 int cubeSpeed = agent.primaryStat.cubeSpeed;
                 int workProb = agent.primaryStat.workProb;
                 int attackSpeed = agent.primaryStat.attackSpeed;
                 int movementSpeed = agent.primaryStat.movementSpeed;
                 int maxHP = agent.primaryStat.maxHP;
                 int maxMental = agent.primaryStat.maxMental;
-                int sum = cubeSpeed + workProb + attackSpeed + movementSpeed + maxHP + maxMental;
 
+                // Calculate total stats
+                int totalStats = cubeSpeed + workProb + attackSpeed + movementSpeed + maxHP + maxMental;
 
+                // Determine best stat manually
+                string bestStatName = "Cube Speed";
+                int bestStatValue = cubeSpeed;
+
+                if (workProb > bestStatValue)
+                {
+                    bestStatName = "Work Prob";
+                    bestStatValue = workProb;
+                }
+                if (attackSpeed > bestStatValue)
+                {
+                    bestStatName = "Attack Speed";
+                    bestStatValue = attackSpeed;
+                }
+                if (movementSpeed > bestStatValue)
+                {
+                    bestStatName = "Movement Speed";
+                    bestStatValue = movementSpeed;
+                }
+                if (maxHP > bestStatValue)
+                {
+                    bestStatName = "Max HP";
+                    bestStatValue = maxHP;
+                }
+                if (maxMental > bestStatValue)
+                {
+                    bestStatName = "Max Mental";
+                    bestStatValue = maxMental;
+                }
+
+                // Add to the list
+                agentStatsList.Add(new KeyValuePair<string, KeyValuePair<int, KeyValuePair<string, int>>>(
+                    agentName,
+                    new KeyValuePair<int, KeyValuePair<string, int>>(
+                        totalStats,
+                        new KeyValuePair<string, int>(bestStatName, bestStatValue)
+                    )
+                ));
             }
 
-            agentGiftCounts.Sort((x, y) => y.Value.CompareTo(x.Value));
+            // Sort agents by total stats in descending order (manual sorting)
+            agentStatsList.Sort((x, y) => y.Value.Key.CompareTo(x.Value.Key));
 
-            foreach (var agentGiftCount in agentGiftCounts)
+            // Build log message
+            foreach (var agentStats in agentStatsList)
             {
-                logMessage.AppendLine($"- {agentGiftCount.Key}: {agentGiftCount.Value} EGO gifts");
+                string agentName = agentStats.Key;
+                int totalStats = agentStats.Value.Key;
+                string bestStatName = agentStats.Value.Value.Key;
+                int bestStatValue = agentStats.Value.Value.Value;
+
+                logMessage.AppendLine($"- {agentName}: Total Stats = {totalStats}, Best Stat = {bestStatName} ({bestStatValue})");
             }
 
             return logMessage.ToString();
         }
+
 
 
         private static bool ShouldLogMessage()
