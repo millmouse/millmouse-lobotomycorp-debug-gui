@@ -41,12 +41,11 @@ namespace MyMod.Patches
 
             var sb = new System.Text.StringBuilder();
 
-            sb.AppendLine("Primary Stat Experience:");
-            sb.AppendLine($"- Battle: {agent.primaryStatExp?.battle ?? 0}");
-            sb.AppendLine($"- Work: {agent.primaryStatExp?.work ?? 0}");
-            sb.AppendLine($"- Mental: {agent.primaryStatExp?.mental ?? 0}");
-            sb.AppendLine($"- HP: {agent.primaryStatExp?.hp ?? 0}");
-
+            //sb.AppendLine("Primary Stat Experience:");
+            //sb.AppendLine($"- Battle: {agent.primaryStatExp?.battle ?? 0}");
+            //sb.AppendLine($"- Work: {agent.primaryStatExp?.work ?? 0}");
+            //sb.AppendLine($"- Mental: {agent.primaryStatExp?.mental ?? 0}");
+            //sb.AppendLine($"- HP: {agent.primaryStatExp?.hp ?? 0}");
             // For each stat (Battle, Work, Mental, HP), calculate and log progress
             sb.AppendLine("Primary Stat Progress:");
             sb.AppendLine(FormatStatProgress("HP", agent, RwbpType.R));

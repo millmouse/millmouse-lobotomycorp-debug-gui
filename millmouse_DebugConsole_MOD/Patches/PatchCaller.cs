@@ -16,9 +16,13 @@ namespace MyMod.Patches
             PatchAgentModel(mod);
             PatchCalculateLevelExp(mod);
             PatchFinishWorkSuccessfully(mod);
+            PatchAgentManagerGetAgentList(mod);
             Log.LogAndDebug("Patched!");
         }
-
+        private void PatchAgentManagerGetAgentList(HarmonyInstance mod)
+        {
+            new AgentManagerPatch(mod);
+        }
         private void PatchEXPStats(HarmonyInstance mod)
         {
             new AnyPatch(mod, typeof(WorkerPrimaryStatExp), "Init");
