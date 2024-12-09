@@ -10,7 +10,10 @@ namespace MyMod.Patches
     public class AgentManagerPatch
     {
         private static readonly Type targetType = typeof(AgentManager);
-        private const string TargetMethodName = "GetAgentList"; 
+        private const string TargetMethodName = "GetAgentList";
+        private static DateTime? lastLogTime = null; 
+        private static readonly TimeSpan logCooldown = TimeSpan.FromSeconds(20); 
+
 
         public AgentManagerPatch(HarmonyInstance mod)
         {
@@ -34,46 +37,52 @@ namespace MyMod.Patches
             }
         }
 
+
         public static void Postfix_LoggerPatch(IList<AgentModel> __result)
         {
-            if (Harmony_Patch.guiInstance?.debugTab != null)
+            if (__result == null || __result.Count == 0)
             {
-                // Check if the result list is null or empty
-                if (__result == null || __result.Count == 0)
-                {
-                    Log.LogAndDebug("AgentManagerPatch: No agents found in GetAgentList.");
-                    return;
-                }
-
-                // Initialize StringBuilder to accumulate the message
-                StringBuilder logMessage = new StringBuilder();
-                logMessage.AppendLine("AgentManagerPatch: EGO gift counts ordered by most to least:");
-
-                // Prepare a list to store agent names and their EGO gift counts
-                var agentGiftCounts = new List<KeyValuePair<string, int>>();
-
-                // Iterate through the agent list and collect their EGO gift counts
-                foreach (var agent in __result)
-                {
-                    string agentName = agent?.name ?? "Unknown Agent";
-                    int giftCount = agent?.GetAllGifts()?.Count ?? 0; // Safely get the gift count
-                    agentGiftCounts.Add(new KeyValuePair<string, int>(agentName, giftCount));
-                }
-
-                // Sort the list by gift count in descending order
-                agentGiftCounts.Sort((x, y) => y.Value.CompareTo(x.Value));
-
-                // Append the sorted results to the logMessage
-                foreach (var agentGiftCount in agentGiftCounts)
-                {
-                    logMessage.AppendLine($"- {agentGiftCount.Key}: {agentGiftCount.Value} EGO gifts");
-                }
-
-                // Log the accumulated message
-                Log.LogAndDebug(logMessage.ToString());
+                Log.LogAndDebug("AgentManagerPatch: No agents found in GetAgentList.");
+                return;
             }
+
+            if (!ShouldLogMessage())
+                return;
+
+            StringBuilder logMessage = new StringBuilder();
+            logMessage.AppendLine("AgentManagerPatch: EGO gift counts ordered by most to least:");
+
+            var agentGiftCounts = new List<KeyValuePair<string, int>>();
+
+            foreach (var agent in __result)
+            {
+                string agentName = agent?.name ?? "Unknown Agent";
+                int giftCount = agent?.GetAllGifts()?.Count ?? 0; 
+                agentGiftCounts.Add(new KeyValuePair<string, int>(agentName, giftCount));
+            }
+
+            agentGiftCounts.Sort((x, y) => y.Value.CompareTo(x.Value));
+
+            foreach (var agentGiftCount in agentGiftCounts)
+            {
+                logMessage.AppendLine($"- {agentGiftCount.Key}: {agentGiftCount.Value} EGO gifts");
+            }
+
+            Log.LogAndDebug(logMessage.ToString());
         }
 
+        private static bool ShouldLogMessage()
+        {
+            DateTime now = DateTime.Now;
 
+            if (lastLogTime.HasValue && (now - lastLogTime.Value) < logCooldown)
+            {
+                return false;
+            }
+
+            lastLogTime = now; 
+            return true;
+        }
     }
+
 }
