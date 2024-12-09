@@ -49,15 +49,21 @@ namespace MyMod.Patches
             if (!ShouldLogMessage())
                 return;
 
+            string logMessage = GetEgoGiftListLog(__result);
+            Log.LogAndDebug(logMessage);
+        }
+
+        private static string GetEgoGiftListLog(IList<AgentModel> agents)
+        {
             StringBuilder logMessage = new StringBuilder();
             logMessage.AppendLine("AgentManagerPatch: EGO gift counts ordered by most to least:");
 
             var agentGiftCounts = new List<KeyValuePair<string, int>>();
 
-            foreach (var agent in __result)
+            foreach (var agent in agents)
             {
                 string agentName = agent?.name ?? "Unknown Agent";
-                int giftCount = agent?.GetAllGifts()?.Count ?? 0; 
+                int giftCount = agent?.GetAllGifts()?.Count ?? 0;
                 agentGiftCounts.Add(new KeyValuePair<string, int>(agentName, giftCount));
             }
 
@@ -68,8 +74,39 @@ namespace MyMod.Patches
                 logMessage.AppendLine($"- {agentGiftCount.Key}: {agentGiftCount.Value} EGO gifts");
             }
 
-            Log.LogAndDebug(logMessage.ToString());
+            return logMessage.ToString();
         }
+
+        private static string GetBestToWorstStatsListLog(IList<AgentModel> agents)
+        {
+            StringBuilder logMessage = new StringBuilder();
+            logMessage.AppendLine("AgentManagerPatch: Agent stats ordered by most to least:");
+
+
+            var agentGiftCounts = new List<KeyValuePair<string, int>>();
+
+            foreach (var agent in agents)
+            {
+                //string agentName = agent?.name ?? "Unknown Agent";
+                //int giftCount = agent?.GetAllGifts()?.Count ?? 0;
+                //agentGiftCounts.Add(new KeyValuePair<string, int>(agentName, giftCount));
+
+                //agent stats grabbed like this:
+                //agent.get
+
+
+            }
+
+            agentGiftCounts.Sort((x, y) => y.Value.CompareTo(x.Value));
+
+            foreach (var agentGiftCount in agentGiftCounts)
+            {
+                logMessage.AppendLine($"- {agentGiftCount.Key}: {agentGiftCount.Value} EGO gifts");
+            }
+
+            return logMessage.ToString();
+        }
+
 
         private static bool ShouldLogMessage()
         {
